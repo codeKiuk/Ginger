@@ -6,3 +6,4 @@
 
 # production
 /build
+/server/config/dev.js

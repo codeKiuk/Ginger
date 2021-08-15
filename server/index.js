@@ -1,22 +1,42 @@
-import express from 'express';
-import { Mongoose } from 'mongoose';
-
-const mongoose = new Mongoose();
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const urlencoded = require('body-parser/lib/types/urlencoded');
+const config = require('./config/config')
 const app = express();
 const port = 8000;
-
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 
 mongoose
-    .connect('mongodb+srv://kiuk:<1234>@ginger.23wuj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+    .connect(config.mongoURI, {
         useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true,
     })
     .then(() => console.log('mongoDB is connected'))
     .catch(err => console.log(err))
 
 
-
+/*////////////////////////////////////////////////////////////////////////////////////////////////
+ *                              Root Path
+ */////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
     res.send('hi it\'s express');
+})
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////
+ *                              회원 등록
+ */////////////////////////////////////////////////////////////////////////////////////////////////
+const { User } = require('./models/User');
+app.post('/register', (req, res) => {
+
+    const user = new User(req.body);
+
+    user.save((err, userModel) => {
+        if (err)
+            return res.json({ success: false, err })
+        else
+            return res.status(200).json({ success: true })
+    })
 })
 
 
