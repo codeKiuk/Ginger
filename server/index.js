@@ -1,10 +1,13 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const urlencoded = require('body-parser/lib/types/urlencoded');
-const config = require('./config/config')
+import express from 'express';
+import { Mongoose } from 'mongoose';
+import bodyParser from 'body-parser';
+import config from './config/config';
+
+import { User } from './models/User';
+
 const app = express();
-const port = 8000;
+const mongoose = new Mongoose();
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
@@ -26,7 +29,6 @@ app.get('/', (req, res) => {
 /*////////////////////////////////////////////////////////////////////////////////////////////////
  *                              회원 등록
  */////////////////////////////////////////////////////////////////////////////////////////////////
-const { User } = require('./models/User');
 app.post('/register', (req, res) => {
 
     const user = new User(req.body);
@@ -67,7 +69,7 @@ app.post('/clubContent', (req, res) => {
  *                              스터디/소모임 댓글 작성
  */////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+const port = 8000;
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`)
 })
