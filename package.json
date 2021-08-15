@@ -13,12 +13,18 @@
     "mongoose": "^5.13.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
     "nodemon": "^2.0.12"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "export NODE_ENV=production && node server/index.js",
-    "server": "export NODE_ENV=development && nodemon server/index.js"
+    "start": "export NODE_ENV=production && babel-node server/index.js",
+    "server": "export NODE_ENV=development && nodemon server/index.js --exec babel-node"
   },
   "author": "kiuk",
   "license": "ISC"
