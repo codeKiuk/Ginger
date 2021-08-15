@@ -2,7 +2,7 @@
   "name": "circler",
   "version": "0.1.0",
   "description": "personal project",
-  "main": "index.js",
+  "main": "server/index.js",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
@@ -12,9 +12,13 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js",
+    "dev": "nodemon -r server/index.js"
   },
   "author": "kiuk",
   "license": "ISC"
