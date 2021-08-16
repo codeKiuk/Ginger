@@ -1,14 +1,11 @@
-import express from 'express';
-import { Mongoose } from 'mongoose';
-import bodyParser from 'body-parser';
-import config from './config/config';
-
-import { User } from './models/User';
-
+const express = require('express');
 const app = express();
-const mongoose = new Mongoose();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const config = require('./config/config');
+const { User } = require('./models/User');
 
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 mongoose
@@ -16,14 +13,35 @@ mongoose
         useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true,
     })
     .then(() => console.log('mongoDB is connected'))
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
  *                              Root Path
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/', (req, res) => {
-    res.send('hi it\'s express');
+app.post('/test', (req, res) => {
+    const testSchema = mongoose.Schema({
+        name: {
+            type: String,
+        }
+    })
+
+    testSchema.pre('save', function (next) {
+        test.name = 'hihihi';
+        next();
+    })
+
+    const Test = mongoose.model('Test', testSchema, 'TEST')
+
+    const test = new Test(req.body);
+
+    test.save((err, doc) => {
+        console.log(doc);
+        if (err) return res.json({ success: false, err })
+
+        return res.status(200).json({ success: true })
+    })
+
 })
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,11 +51,13 @@ app.post('/register', (req, res) => {
 
     const user = new User(req.body);
 
-    user.save((err, userModel) => {
-        if (err)
-            return res.json({ success: false, err })
-        else
-            return res.status(200).json({ success: true })
+    user.save((err, doc) => {
+        console.log('doc: ', doc);
+        console.log('save err: ', err);
+
+        if (err) return res.json({ success: false, err })
+
+        return res.status(200).json({ success: true })
     })
 })
 
