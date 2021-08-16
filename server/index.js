@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config/config');
 const { User } = require('./models/User');
+const { auth } = require('./middleware/auth')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -28,7 +29,7 @@ app.post('/', (req, res) => {
 /*////////////////////////////////////////////////////////////////////////////////////////////////
  *                              회원 등록
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.post('/register', (req, res) => {
+app.post('/api/auth/register', (req, res) => {
 
     const user = new User(req.body);
 
@@ -42,14 +43,14 @@ app.post('/register', (req, res) => {
 /*////////////////////////////////////////////////////////////////////////////////////////////////
  *                              로그인
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.post('/login', (req, res) => {
+app.post('/api/auth/login', (req, res) => {
 
     User.findOne({ userID: req.body.userID }, (err, user) => {
         // UserID Match?
         if (!user)
             return res.json({
                 loginSuccess: false,
-                emailMatch: false,
+                userIDMatch: false,
                 message: "이메일이 존재하지 않습니다."
             })
 
@@ -66,7 +67,7 @@ app.post('/login', (req, res) => {
                 if (err) return res.status(400).send(err)
 
                 // Cookie에 토큰 저장
-                res.cookie('token', user.token)
+                res.cookie('auth', user.token)
                     .status(200)
                     .json({
                         loginSuccess: true,
@@ -77,6 +78,31 @@ app.post('/login', (req, res) => {
         })
     })
 })
+/*////////////////////////////////////////////////////////////////////////////////////////////////
+ *                              로그아웃
+ */////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/api/auth/logout', auth, (req, res) => {
+
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+        if (err) return res.json({ logoutSuccess: false, error: '로그아웃 실패' })
+        return res.status(200).json({ logoutSuccess: true })
+    })
+})
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////
+ *                              Token으로 Permission 페이지 이동시 체크
+ */////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/api/auth', auth, (req, res) => {
+
+    res.status(200).json({
+        token: req.token,
+        userID: req.user.userID,
+        password: req.user.password,
+        tokenMatch: true,
+        admin: req.user.admin === 0 ? false : true,
+    })
+})
+
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
  *                              동아리/학회 글 작성

@@ -47,6 +47,20 @@ userSchema.methods.generateToken = function (callback) {
     })
 }
 
+userSchema.statics.findByToken = function (token, callback) {
+    const user = this;
+
+    // token 복호화
+    jwt.verify(token, 'userToken', function (err, decoded) {
+        // decoded == user._id
+        user.findOne({ _id: decoded, token: token, }, function (err, user) {
+            if (err) return callback(err);
+            return callback(null, user);
+        })
+
+    })
+}
+
 userSchema.pre('save', function (next) {
 
     const user = this;
