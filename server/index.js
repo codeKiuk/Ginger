@@ -3,13 +3,21 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const config = require('./config/config');
 const { User } = require('./models/User');
 const { auth } = require('./middleware/auth')
 
+const corsOption = {
+    // origin: [/\.example2\.com$/],
+    origin: ['http://localhost:3000'],
+    optionsSuccessStatus: 200,
+}
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.user(cors(corsOption));
 
 mongoose
     .connect(config.mongoURI, {
@@ -20,16 +28,16 @@ mongoose
 
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              Root Path
+ *                                          Root Path
  */////////////////////////////////////////////////////////////////////////////////////////////////
 app.post('/', (req, res) => {
 
 })
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              회원 등록
+ *                                          회원 등록
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.post('/api/auth/register', (req, res) => {
+app.post('/api/auth/register', function (req, res) {
 
     const user = new User(req.body);
 
@@ -41,11 +49,11 @@ app.post('/api/auth/register', (req, res) => {
 })
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              로그인
+ *                                              로그인
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', function (req, res) {
 
-    User.findOne({ userID: req.body.userID }, (err, user) => {
+    User.findOne({ userID: req.body.userID }, function (err, user) {
         // UserID Match?
         if (!user)
             return res.json({
@@ -54,7 +62,7 @@ app.post('/api/auth/login', (req, res) => {
                 message: "이메일이 존재하지 않습니다."
             })
 
-        user.comparePassword(req.body.password, (err, isMatch) => {
+        user.comparePassword(req.body.password, function (err, isMatch) {
             // 비밀번호 Match?
             if (!isMatch)
                 return res.json({
@@ -63,7 +71,7 @@ app.post('/api/auth/login', (req, res) => {
                     message: '비밀번호가 틀렸습니다'
                 })
             // 비밀번호 Match => Token 생성
-            user.generateToken((err, user) => {
+            user.generateToken(function (err, user) {
                 if (err) return res.status(400).send(err)
 
                 // Cookie에 토큰 저장
@@ -79,20 +87,20 @@ app.post('/api/auth/login', (req, res) => {
     })
 })
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              로그아웃
+ *                                          로그아웃
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/api/auth/logout', auth, (req, res) => {
+app.get('/api/auth/logout', auth, function (req, res) {
 
-    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, function (err, user) {
         if (err) return res.json({ logoutSuccess: false, error: '로그아웃 실패' })
         return res.status(200).json({ logoutSuccess: true })
     })
 })
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              Token으로 Permission 페이지 이동시 체크
+ *                              페이지 이동시 Token으로 Permission 체크
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/api/auth', auth, (req, res) => {
+app.get('/api/auth', auth, function (req, res) {
 
     res.status(200).json({
         token: req.token,
@@ -105,24 +113,24 @@ app.get('/api/auth', auth, (req, res) => {
 
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              동아리/학회 글 작성
+ *                                          동아리/학회 글 작성
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.post('/clubContent', (req, res) => {
+app.post('/clubContent', function (req, res) {
 
 })
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              스터디/소모임 글 작성
+ *                                          스터디/소모임 글 작성
  */////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              동아리/학회 댓글 작성
+ *                                          동아리/학회 댓글 작성
  */////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                              스터디/소모임 댓글 작성
+ *                                          스터디/소모임 댓글 작성
  */////////////////////////////////////////////////////////////////////////////////////////////////
 
 const port = 8000;
