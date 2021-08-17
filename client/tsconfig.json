@@ -6,6 +6,30 @@
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
+      ],
+      "@src/*": [
+        "./src/*"
+      ],
+      "@hoc/*": [
+        "./src/hoc/*"
+      ],
+      "@redux/*": [
+        "./src/redux/*"
+      ],
+      "@actions/*": [
+        "./src/redux/modules/*"
+      ],
+      "@dispatch": [
+        "./src/redux/hooks"
+      ],
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '@redux/hooks'
 
 export const withAuth = (WrappedComponent: React.FC<{}>, auth: number): React.FC<{}> => {
 
     const Auth: React.FC<{}> = () => {
-        const dispatch = useDispatch();
+        const dispatch = useAppDispatch();
 
         useEffect(() => {
 

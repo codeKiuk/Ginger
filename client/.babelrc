@@ -3,8 +3,10 @@
         [
             "module-resolver",
             {
+                "root": [
+                    "./"
+                ],
                 "alias": {
-                    "@": ".",
                     "@src": "./src",
                     "@hoc": "./src/hoc",
                     "@components": "./src/components",

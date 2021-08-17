@@ -50,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "babel-node": "0.0.1-security",
     "babel-plugin-module-resolver": "^4.1.0",
     "ts-node": "^10.2.0"
   }
