@@ -1,0 +1,19 @@
+{
+    "plugins": [
+        [
+            "module-resolver",
+            {
+                "alias": {
+                    "@": ".",
+                    "@src": "./src",
+                    "@hoc": "./src/hoc",
+                    "@components": "./src/components",
+                    "@pages": "./src/pages",
+                    "@redux": "./src/redux",
+                    "@actions": "./src/redux/modules",
+                    "@dispatch": "./src/redux/hooks",
+                }
+            }
+        ],
+    ]
+}
