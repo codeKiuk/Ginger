@@ -17,7 +17,7 @@ const corsOption = {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.user(cors(corsOption));
+app.use(cors(corsOption));
 
 mongoose
     .connect(config.mongoURI, {
