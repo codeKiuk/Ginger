@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const MyComments: React.FC<{}> = () => {
+export const Loading: React.FC<{}> = () => {
     return (
         <div>
 
