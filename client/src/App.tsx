@@ -4,10 +4,11 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
 import { store } from '@redux/store';
 import { withAuth } from '@hoc/withAuth';
-import { Home } from '@pages/Home'
-import { Login } from '@pages/Login';
-import { Register } from '@pages/Register';
-import { MyPage } from '@pages/MyPage';
+
+const Home = React.lazy(() => import('@pages/Home'))
+const Login = React.lazy(() => import('@pages/Login'))
+const Register = React.lazy(() => import('@pages/Register'))
+const MyPage = React.lazy(() => import('@pages/MyPage'))
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Route exact path='/' component={withAuth(Home, -1)} />
           <Route exact path='/login' component={withAuth(Login, 0)} />
           <Route exact path='/register' component={withAuth(Register, 0)} />
-          <Route exact path='/me/contents' component={withAuth(MyPage, 1)} />
+          <Route exact path='/contents/:user' component={withAuth(MyPage, 1)} />
         </Switch>
       </BrowserRouter>
     </Provider>

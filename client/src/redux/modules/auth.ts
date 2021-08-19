@@ -50,6 +50,7 @@ export const authSlice = createSlice({
         },
         [compareToken.rejected.type]: (state, action) => {
             state.loading = false;
+            // action.error.message = "Rejected
             state.tokenMatch = false;
         }
     }

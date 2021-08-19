@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import { compareToken } from '@redux/modules/auth'
+import { CircularProgress } from '@material-ui/core'
 
 export const withAuth = (WrappedComponent: React.FC<RouteComponentProps>, auth: number): React.FC<RouteComponentProps> => {
 
@@ -34,7 +35,11 @@ export const withAuth = (WrappedComponent: React.FC<RouteComponentProps>, auth: 
 
 
         return (
-            <WrappedComponent {...props} />
+            <div>
+                <Suspense fallback={<CircularProgress />}>
+                    <WrappedComponent {...props} />
+                </Suspense>
+            </div>
         )
     }
 

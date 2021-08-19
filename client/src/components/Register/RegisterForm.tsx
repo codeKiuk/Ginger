@@ -1,39 +1,33 @@
 import React, { useEffect } from 'react'
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import login, { postLogin } from '@redux/modules/login'
 import { RouteComponentProps } from 'react-router';
-import { compareToken } from '@redux/modules/auth';
+import { Button } from '@material-ui/core';
+import { postRegister } from '@redux/modules/register';
 
+type Register = {
+    userID: String,
+    password: String,
+    confirmPassword: String
+}
 
-type Login = {
-    userID: String;
-    password: String;
-};
-
-const LoginForm: React.FC<RouteComponentProps> = (props) => {
+export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
     const dispatch = useAppDispatch();
-    const { register, setValue, handleSubmit, formState: { errors } } = useForm<Login>();
+    const { register, setValue, handleSubmit, formState: { errors } } = useForm<Register>();
+
     const onSubmit = handleSubmit(data => {
-        // console.log('data: ', data);
-        dispatch(postLogin(data))
-            .then((res) => {
-                console.log('loginForm res: ', res);
-                if (res.payload.loginSuccess) {
+        dispatch(postRegister(data))
+            .then(res => {
+                console.log('postRegister res', res);
+
+                if (res.payload.success) {
                     props.history.push('/');
                 } else {
-                    props.history.push('/login');
+                    props.history.push('/register')
                 }
             })
-            .catch((err) => console.log('postLogin err: ', err));
-
-
-        // props.history.push('/')
-    });
-
-    useEffect(() => {
-
-    }, [])
+            .catch(err => console.log('postRegister err: ', err))
+    })
 
     return (
         <form onSubmit={onSubmit}>
@@ -55,12 +49,12 @@ const LoginForm: React.FC<RouteComponentProps> = (props) => {
                     })}
                 />
             </label>
-            <button type='submit'>
-                로그인
-            </button>
+            {/* <label>
+                비밀번호 확인
+                <input />
+            </label> */}
+            <Button color="primary" onClick={onSubmit} type='submit' />
         </form>
 
     )
 }
-
-export default LoginForm
