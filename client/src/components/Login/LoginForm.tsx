@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useForm } from "react-hook-form";
-import { useAppDispatch } from '@redux/hooks';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import login, { postLogin } from '@redux/modules/login'
+import { RouteComponentProps } from 'react-router';
+import { compareToken } from '@redux/modules/auth';
 
 
 type Login = {
@@ -9,12 +11,25 @@ type Login = {
     password: String;
 };
 
-const LoginForm: React.FC<{}> = () => {
+const LoginForm: React.FC<RouteComponentProps> = (props) => {
     const dispatch = useAppDispatch();
     const { register, setValue, handleSubmit, formState: { errors } } = useForm<Login>();
-    const onSubmit = handleSubmit((data) => {
-        console.log('data: ', data)
+    const onSubmit = handleSubmit(data => {
+        // console.log('data: ', data);
         dispatch(postLogin(data))
+            .then((res) => {
+                console.log('loginForm res: ', res);
+                if (res.payload.loginSuccess) {
+                    dispatch(compareToken());
+                    props.history.push('/');
+                } else {
+                    props.history.push('/login');
+                }
+            })
+            .catch((err) => console.log('postLogin err: ', err));
+
+
+        // props.history.push('/')
     });
 
     useEffect(() => {

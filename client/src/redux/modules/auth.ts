@@ -19,12 +19,13 @@ const initialState: auth = {
 
 export const compareToken = createAsyncThunk(
     'auth/compareToken',
-    async ({ }, thunkAPI) => {
+    async (undefined, thunkAPI) => {
         try {
             const res = await axios.get('/api/auth')
             console.log('auth res: ', res);
             return res.data
         } catch (err) {
+            console.log('auth err: ', err);
             return thunkAPI.rejectWithValue(err);
         }
     }
