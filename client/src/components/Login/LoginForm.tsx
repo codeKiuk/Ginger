@@ -19,7 +19,7 @@ const LoginForm: React.FC<RouteComponentProps> = (props) => {
         dispatch(postLogin(data))
             .then((res) => {
                 console.log('loginForm res: ', res);
-                if (res.payload.loginSuccess) {
+                if (res.payload.success) {
                     props.history.push('/');
                 } else {
                     props.history.push('/login');

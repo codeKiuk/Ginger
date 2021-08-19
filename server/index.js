@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const config = require('./config/config');
 const { User } = require('./models/User');
+const { ClubContent } = require('./models/ClubContent');
+const { GroupContent } = require('./models/GroupContent');
+const { ClubComment } = require('./models/ClubComment');
 const { auth } = require('./middleware/auth')
 
 const corsOption = {
@@ -41,7 +44,7 @@ app.post('/api/auth/register', function (req, res) {
 
     const user = new User(req.body);
 
-    user.save((err, userInfo) => {
+    user.save((err, createdUser) => {
         if (err) return res.json({ success: false, err })
 
         return res.status(200).json({ success: true })
@@ -57,7 +60,7 @@ app.post('/api/auth/login', function (req, res) {
         // UserID Match?
         if (!user)
             return res.json({
-                loginSuccess: false,
+                success: false,
                 userIDMatch: false,
                 message: "이메일이 존재하지 않습니다."
             })
@@ -66,7 +69,7 @@ app.post('/api/auth/login', function (req, res) {
             // 비밀번호 Match?
             if (!isMatch)
                 return res.json({
-                    loginSuccess: false,
+                    success: false,
                     passwordMatch: false,
                     message: '비밀번호가 틀렸습니다'
                 })
@@ -78,7 +81,7 @@ app.post('/api/auth/login', function (req, res) {
                 res.cookie('auth', user.token)
                     .status(200)
                     .json({
-                        loginSuccess: true,
+                        success: true,
                         userID: user.userID,
                         id: user._id,
                     })
@@ -92,8 +95,8 @@ app.post('/api/auth/login', function (req, res) {
 app.get('/api/auth/logout', auth, function (req, res) {
 
     User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, function (err, user) {
-        if (err) return res.json({ logoutSuccess: false, error: '로그아웃 실패' })
-        return res.status(200).json({ logoutSuccess: true })
+        if (err) return res.json({ success: false, error: '로그아웃 실패' })
+        return res.status(200).json({ success: true })
     })
 })
 
@@ -113,25 +116,96 @@ app.get('/api/auth', auth, function (req, res) {
 
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                                          동아리/학회 글 작성
+ *                                          ClubContent: 동아리/학회 글
  */////////////////////////////////////////////////////////////////////////////////////////////////
-app.post('/clubContent', function (req, res) {
+app.post('/api/club/contents', function (req, res) {
+
+    const clubContent = new ClubContent(req.body);
+
+    clubContent.save((err, createdClubContent) => {
+        console.log('clubContent :', createdClubContent)
+        if (err) return res.json({ success: false, err })
+        return res.status(200).json({
+            success: true,
+        })
+    })
+})
+
+app.get('/api/club/contents', function (req, res) {
+
+})
+/*////////////////////////////////////////////////////////////////////////////////////////////////
+ *                                          ClubComment: 동아리/학회 댓글
+ */////////////////////////////////////////////////////////////////////////////////////////////////
+app.post(`/api/club/comments/:contentID`, function (req, res) {
+    // req.params.contentID
+    const contentID = req.params.contentID;
+    // console.log('contentID: ', contentID)
+    ClubContent.findOne({ _id: contentID }, (err, clubContent) => {
+        // console.log('clubContent: ', clubContent);
+        if (!clubContent) return res.json({ success: false, err })
+
+        const clubComment = new ClubComment({
+            userID: req.body.userID,
+            comment: req.body.comment,
+            contentID: clubContent._id,
+        });
+        clubComment.save((err, createdClubComment) => {
+            if (err) return res.json({ success: false, err })
+            return res.status(200).json({
+                success: true,
+            })
+        })
+
+    })
+
+})
+
+app.get('/api/club/comments/:contentID', function (req, res) {
+
+})
+
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////
+*                                          GroupContent: 스터디/소모임 글
+*/////////////////////////////////////////////////////////////////////////////////////////////////
+app.post('/api/group/contents', function (req, res) {
+    const groupContent = new GroupContent(req.body);
+
+    groupContent.save((err, createdGroupContent) => {
+        if (err) return res.json({ success: false, err })
+
+        return res.status(200).json({ success: true })
+    })
+})
+
+app.get('/api/group/contents/:contentID', function (req, res) {
 
 })
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
- *                                          스터디/소모임 글 작성
+ *                                          GroupComment: 스터디/소모임 댓글
  */////////////////////////////////////////////////////////////////////////////////////////////////
+app.post('/api/group/comments/:contentID', function (req, res) {
 
+    const contentID = req.params.contentID;
+    GroupContent.findOne({ _id: contentID }, (err, groupContent) => {
 
+        if (err) return res.json({ success: false, err })
 
-/*////////////////////////////////////////////////////////////////////////////////////////////////
- *                                          동아리/학회 댓글 작성
- */////////////////////////////////////////////////////////////////////////////////////////////////
+        const groupComment = new GroupContent({
+            userID: req.body.userID,
+            comment: req.body.comment,
+            contentID: groupContent._id,
+        })
 
-/*////////////////////////////////////////////////////////////////////////////////////////////////
- *                                          스터디/소모임 댓글 작성
- */////////////////////////////////////////////////////////////////////////////////////////////////
+        groupComment.save((err, createdGroupComment) => {
+            if (err) return res.json({ success: false, err })
+            return res.status(200).json({ success: true })
+        })
+    })
+})
+
 
 const port = 8000;
 app.listen(port, () => {

@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 type login = {
-    loginSuccess: Boolean,
+    success: Boolean,
     loading: Boolean,
 }
 
 const initialState: login = {
-    loginSuccess: false,
+    success: false,
     loading: false,
 }
 
@@ -27,13 +27,10 @@ export const postLogin = createAsyncThunk(
     }
 )
 
-export const loginSlice = createSlice({
+export const slice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-        setLoginSuccess: (state, action: PayloadAction<Boolean>) => {
-            state.loginSuccess = action.payload;
-        }
     },
     extraReducers: {
         [postLogin.pending.type]: (state, action) => {
@@ -41,16 +38,16 @@ export const loginSlice = createSlice({
         },
         [postLogin.fulfilled.type]: (state, action) => {
             state.loading = false;
-            state.loginSuccess = action.payload.loginSuccess;
+            state.success = action.payload.success;
             // console.log('action.payload: ', action.payload);
         },
         [postLogin.rejected.type]: (state, action) => {
             state.loading = false;
             // action.error.message = "Rejected
-            state.loginSuccess = false;
+            state.success = false;
         }
     }
 })
 
 
-export default loginSlice.reducer
+export default slice.reducer
