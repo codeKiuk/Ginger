@@ -2,7 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 const LoginForm = React.lazy(() => import('@components/Login/LoginForm'))
 
-export const Login: React.FC<RouteComponentProps> = (props) => {
+const Login: React.FC<RouteComponentProps> = (props) => {
 
     return (
         <Suspense fallback={<div>loading...</div>}>
@@ -10,3 +10,5 @@ export const Login: React.FC<RouteComponentProps> = (props) => {
         </Suspense>
     );
 }
+
+export default Login

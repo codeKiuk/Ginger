@@ -9,3 +9,5 @@ export const Register: React.FC<RouteComponentProps> = (props) => {
         </Suspense>
     )
 }
+
+export default Register
