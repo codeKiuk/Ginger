@@ -17,7 +17,7 @@ function App() {
           <Route exact path='/' component={withAuth(Home, -1)} />
           <Route exact path='/login' component={withAuth(Login, 0)} />
           <Route exact path='/register' component={withAuth(Register, 0)} />
-          <Route exact path='/me/contents' component={withAuth(MyPage, 1)} />
+          <Route exact path='/contents/:user' component={withAuth(MyPage, 1)} />
         </Switch>
       </BrowserRouter>
     </Provider>
