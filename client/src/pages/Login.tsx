@@ -1,27 +1,12 @@
-import React from 'react'
-import { useForm } from "react-hook-form";
+import React, { Suspense, useEffect } from 'react';
+import { RouteComponentProps } from 'react-router';
+const LoginForm = React.lazy(() => import('@components/Login/LoginForm'))
 
-type loginForm = {
-    firstName: string,
-    lastName: string,
-}
-
-export const Login: React.FC<{}> = () => {
-    const { register, setValue, handleSubmit, formState: { errors } } = useForm<FormData>();
-    const onSubmit = handleSubmit(data => console.log(data));
-    // firstName and lastName will have correct type
+export const Login: React.FC<RouteComponentProps> = (props) => {
 
     return (
-        <form onSubmit={onSubmit}>
-            <label>First Name</label>
-
-            <label>Last Name</label>
-            <input />
-            <button
-                type="button"
-            >
-                SetValue
-            </button>
-        </form>
+        <Suspense fallback={<div>loading...</div>}>
+            <LoginForm {...props} />
+        </Suspense>
     );
 }

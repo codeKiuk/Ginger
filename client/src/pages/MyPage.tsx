@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const MyContents: React.FC<{}> = () => {
+export const MyPage: React.FC<{}> = () => {
     return (
         <div>
 
