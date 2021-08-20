@@ -5,8 +5,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const config = require('./config/config');
-const { User } = require('./models/User');
-const { auth } = require('./middleware/auth');
 
 const authRoute = require('./routes/auth/auth');
 const loginRoute = require('./routes/auth/login');
@@ -39,6 +37,11 @@ app.use(clubContentRoute);
 app.use(clubCommentRoute);
 app.use(groupContentRoute);
 app.use(groupCommentRoute);
+
+// SSR
+app.get('/', function (req, res) {
+
+})
 
 mongoose
     .connect(config.mongoURI, {

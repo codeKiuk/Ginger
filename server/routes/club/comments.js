@@ -29,6 +29,29 @@ router.post(`/api/club/comments/:contentID`, function (req, res) {
 
 router.get('/api/club/comments/:contentID', function (req, res) {
 
+    const contentID = req.params.contentID;
+    ClubComment.find({ contentID: contentID }, (err, clubComment) => {
+        if (err) return res.json({ success: false, err })
+        return res.json({ comments: clubComment })
+    })
+})
+
+router.put('/api/club/comments/:commentID', function (req, res) {
+
+    const commentID = req.params.commentID;
+    ClubComment.findByIdAndUpdate(commentID, req.body, (err, clubComment) => {
+        if (err) return res.json({ success: false, err })
+        return res.json({ success: true })
+    })
+})
+
+router.delete('/api/club/comments/:commentID', function (req, res) {
+
+    const commentID = req.params.commentID;
+    ClubComment.findByIdAndDelete(commentID, (err, clubComment) => {
+        if (err) return res.json({ success: false, err })
+        return res.json({ success: true })
+    })
 })
 
 module.exports = router;
