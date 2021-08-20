@@ -16,7 +16,17 @@ router.post('/api/club/contents', function (req, res) {
 })
 
 router.get('/api/club/contents', function (req, res) {
+    const skip = (req.body.page - 1) * req.body.perPage;
+    const limit = req.body.perPage;
 
+    ClubContent
+        .find()
+        .skip(skip)
+        .limit(limit)
+        .exec((err, clubContent) => {
+            if (err) return res.json({ success: false, err })
+            return res.status(200).json({ contents: clubContent })
+        })
 })
 
 module.exports = router;

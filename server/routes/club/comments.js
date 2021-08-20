@@ -29,6 +29,11 @@ router.post(`/api/club/comments/:contentID`, function (req, res) {
 
 router.get('/api/club/comments/:contentID', function (req, res) {
 
+    const contentID = req.params.contentID;
+    ClubComment.find({ contentID: contentID }, (err, clubComment) => {
+        if (err) return res.json({ success: false, err })
+        return res.json({ comments: clubComment })
+    })
 })
 
 module.exports = router;
