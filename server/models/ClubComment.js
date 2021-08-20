@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 const ClubCommentSchema = mongoose.Schema({
+    /**
+     * _id : {}
+     */
     userID: {
-        type: {
-
-        }
+        type: String,
+        required: true
     },
     comment: {
         type: String,
