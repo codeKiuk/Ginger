@@ -36,4 +36,22 @@ router.get('/api/group/contents', function (req, res) {
     //   }, ...]
 })
 
+router.put('/api/group/contents/:contentID', function (req, res) {
+
+    const contentID = req.params.contentID;
+    GroupContent.findByIdAndUpdate(contentID, req.body, (err, groupContent) => {
+        if (err) return res.json({ success: false, err })
+        return res.status(200).json({ success: true })
+    });
+})
+
+router.delete('/api/group/contents/:contentID', function (req, res) {
+
+    const contentID = req.params.contentID;
+    GroupContent.findByIdAndDelete(contentID, (err, groupContent) => {
+        if (err) return res.json({ success: false, err })
+        return res.status(200).json({ success: true })
+    })
+})
+
 module.exports = router;
