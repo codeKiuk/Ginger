@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-type login = {
+type Login = {
     success: Boolean,
     loading: Boolean,
 }
 
-const initialState: login = {
+const initialState: Login = {
     success: false,
     loading: false,
 }
@@ -27,7 +27,7 @@ export const postLogin = createAsyncThunk(
     }
 )
 
-export const slice = createSlice({
+export const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
@@ -50,4 +50,4 @@ export const slice = createSlice({
 })
 
 
-export default slice.reducer
+export default loginSlice.reducer
