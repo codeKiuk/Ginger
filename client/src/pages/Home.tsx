@@ -1,10 +1,10 @@
 import React from 'react'
+import Main from '@components/Home/Main'
+import { RouteComponentProps } from 'react-router'
 
-const Home: React.FC<{}> = () => {
+const Home: React.FC<RouteComponentProps> = (props) => {
     return (
-        <div>
-            Home
-        </div>
+        <Main {...props} />
     )
 }
 

@@ -5,6 +5,9 @@
             "@components/*": [
                 "components/*"
             ],
+            "@commons/*": [
+                "commons/*"
+            ],
             "@pages/*": [
                 "pages/*"
             ],
