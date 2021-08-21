@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../../models/User');
+
 router.post('/api/auth/register', function (req, res) {
 
     const user = new User(req.body);
 
-    User.find({ userID: user.userID }, (err, serchedUser) => {
-        if (err) {
-            console.log('isDuplicated === false, err: ', err);
-        } else {
-            return res.json({ success: false, isDuplicated: true })
-        }
+    User.findOne({ userID: user.userID }, (err, serchedUser) => {
+        if (err) return res.json({ success: false, err })
+        else if (serchedUser !== null) return res.json({ success: false, isDuplicated: true })
 
     })
 
@@ -23,6 +21,7 @@ router.post('/api/auth/register', function (req, res) {
             password: createdUser.password
         })
     })
+
 })
 
 module.exports = router;

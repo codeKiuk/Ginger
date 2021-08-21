@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import login, { postLogin } from '@redux/modules/login'
 import { RouteComponentProps } from 'react-router';
@@ -61,7 +61,7 @@ const LoginForm: React.FC<RouteComponentProps> = (props) => {
     const dispatch = useAppDispatch();
     const loginSuccess = useAppSelector(state => state.login.success);
     const loading = useAppSelector(state => state.login.loading);
-    const { register, setValue, handleSubmit, formState: { errors } } = useForm<Login>();
+    const { control, handleSubmit, formState: { errors } } = useForm<Login>();
 
     useEffect(() => {
 
@@ -103,32 +103,49 @@ const LoginForm: React.FC<RouteComponentProps> = (props) => {
                         onSubmit={onSubmit}
                         className={classes.form} noValidate
                     >
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
+                        <Controller
+                            name='userID'
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) =>
+                                <TextField
+                                    {...field}
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                />
+                            }
                         />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
+                        <Controller
+                            name='password'
+                            control={control}
+                            defaultValue=""
+                            render={({ field }) =>
+                                <TextField
+                                    {...field}
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+                            }
                         />
-                        <FormControlLabel
+
+                        {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
-                        />
+                        /> */}
                         {
                             loading
                                 ?

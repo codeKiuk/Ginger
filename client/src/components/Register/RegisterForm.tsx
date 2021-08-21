@@ -47,33 +47,33 @@ const useStyles = makeStyles((theme) => ({
 export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const registerSuccess = useAppSelector(state => state.register.success);
-    const userID = useAppSelector(state => state.register.userID);
-    const password = useAppSelector(state => state.register.password);
     const loading = useAppSelector(state => state.register.loading);
     const { control, handleSubmit, formState: { errors } } = useForm<Register>();
-
-    useEffect(() => {
-        if (registerSuccess) {
-            dispatch(postLogin({ userID: userID, password: password }))
-                .then(() => {
-                    props.history.push('/');
-                })
-
-        }
-    }, [registerSuccess])
 
     useEffect(() => {
 
     }, [loading])
 
-    const onSubmit = handleSubmit(data => {
-        console.log(data);
-        dispatch(postRegister(data))
-            .then(res => {
-                // 이메일 중복 체크 => if !res.payload.success && res.payload.isDuplicated
-                console.log(res)
-            });
+    const onSubmit = handleSubmit(async (data) => {
+        // console.log(data);
+        const res = await dispatch(postRegister(data));
+        console.log('register response', res);
+        // .then(res => {
+        //     // 이메일 중복 체크 => if !res.payload.success && res.payload.isDuplicated
+        //     console.log(res)
+        // });
+        if (res.payload.success) {
+            const loginRes = await dispatch(postLogin({ userID: res.payload.userID, password: res.payload.password }));
+            console.log('loginRes: ', loginRes);
+            if (loginRes.payload.success) {
+
+                props.history.push('/');
+            }
+        } else if (res.payload.isDuplicated) {
+
+        } else {    // server error
+
+        }
     })
 
     const onLoginClick = () => {
