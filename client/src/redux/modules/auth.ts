@@ -5,7 +5,6 @@ type auth = {
     loading: Boolean,
     tokenMatch: Boolean,
     userID: String,
-    password: String,
     admin: Number,
 }
 
@@ -13,7 +12,6 @@ const initialState: auth = {
     loading: false,
     tokenMatch: false,
     userID: '',
-    password: '',
     admin: 0,
 }
 
@@ -45,7 +43,6 @@ export const authSlice = createSlice({
             state.loading = false;
             state.admin = action.payload.admin;
             state.userID = action.payload.userID;
-            state.password = action.payload.password;
             state.tokenMatch = action.payload.tokenMatch;
         },
         [compareToken.rejected.type]: (state, action) => {
