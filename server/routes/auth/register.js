@@ -1,28 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../../models/User');
-router.post('/api/auth/register', function (req, res) {
+
+router.post('/api/auth/register', async function (req, res) {
 
     const user = new User(req.body);
 
-    User.find({ userID: user.userID }, (err, serchedUser) => {
-        if (err) {
-            console.log('isDuplicated === false, err: ', err);
-        } else {
-            return res.json({ success: false, isDuplicated: true })
-        }
-
-    })
-
-    user.save((err, createdUser) => {
+    User.findOne({ userID: user.userID }, (err, serchedUser) => {
         if (err) return res.json({ success: false, err })
-
-        return res.status(200).json({
-            success: true,
-            userID: createdUser.userID,
-            password: createdUser.password
-        })
+        else if (serchedUser !== null) return res.json({ success: false, isDuplicated: true })
+        else
+            user.save((err, createdUser) => {
+                if (err) return res.json({ success: false, error: '회원가입 실패' })
+                // console.log('createdUser: ', createdUser)
+                return res.status(200).json({
+                    success: true,
+                    userID: req.body.userID,
+                    password: req.body.password
+                })
+            })
     })
+
+
+
 })
 
 module.exports = router;
