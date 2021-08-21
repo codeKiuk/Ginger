@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import login, { postLogin } from '@redux/modules/login'
 import { RouteComponentProps } from 'react-router';
-import Copyright from '../../commons/Copyright';
+import Copyright from '../commons/Copyright';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -77,7 +77,7 @@ const LoginForm: React.FC<RouteComponentProps> = (props) => {
     }, [loading])
 
     const onSubmit = handleSubmit(data => {
-        // console.log('data: ', data);
+        console.log('data: ', data);
         dispatch(postLogin(data))
             .then((res) => console.log(res));
     });
