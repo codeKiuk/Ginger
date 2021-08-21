@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { useForm } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { RouteComponentProps } from 'react-router';
 import { postRegister } from '@redux/modules/register';
 import { postLogin } from '@redux/modules/login';
-import Copyright from '../../commons/Copyright';
+import Copyright from '../commons/Copyright';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -51,12 +51,15 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
     const userID = useAppSelector(state => state.register.userID);
     const password = useAppSelector(state => state.register.password);
     const loading = useAppSelector(state => state.register.loading);
-    const { register, setValue, handleSubmit, formState: { errors } } = useForm<Register>();
+    const { control, handleSubmit, formState: { errors } } = useForm<Register>();
 
     useEffect(() => {
         if (registerSuccess) {
             dispatch(postLogin({ userID: userID, password: password }))
-            props.history.push('/');
+                .then(() => {
+                    props.history.push('/');
+                })
+
         }
     }, [registerSuccess])
 
@@ -65,17 +68,12 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
     }, [loading])
 
     const onSubmit = handleSubmit(data => {
+        console.log(data);
         dispatch(postRegister(data))
             .then(res => {
-                console.log('postRegister res', res);
-
-                if (res.payload.success) {
-                    props.history.push('/');
-                } else {
-                    props.history.push('/register')
-                }
-            })
-            .catch(err => console.log('postRegister err: ', err))
+                // 이메일 중복 체크 => if !res.payload.success && res.payload.isDuplicated
+                console.log(res)
+            });
     })
 
     const onLoginClick = () => {
@@ -92,43 +90,68 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form onSubmit={onSubmit} className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                            <Controller
+                                name='userID'
+                                control={control}
+                                defaultValue=""
+                                render={({ field }) =>
+                                    <TextField
+                                        {...field}
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Email Address"
+                                        name="email"
+                                        autoComplete="email"
+                                    />
+                                }
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
+                            <Controller
+                                name='password'
+                                control={control}
+                                defaultValue=""
+                                render={({ field }) =>
+                                    <TextField
+                                        {...field}
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="current-password"
+                                    />
+                                }
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Confirm Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
+                        {/* <Grid item xs={12}>
+                            <Controller
+                                name='confirmPassword'
+                                control={control}
+                                defaultValue=""
+                                render={({ field }) =>
+                                    <TextField
+                                        {...field}
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Confirm Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="current-password"
+                                    />
+                                }
                             />
-                        </Grid>
+
+                        </Grid> */}
                     </Grid>
                     <Button
                         type="submit"
