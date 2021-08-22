@@ -14,8 +14,8 @@ router.post('/api/group/contents', function (req, res) {
 
 router.get('/api/group/contents', function (req, res) {
 
-    const skip = (req.body.page - 1) * req.body.perPage;
-    const limit = req.body.perPage;
+    const skip = (req.query.page - 1) * req.query.perPage;
+    const limit = req.query.perPage;
 
     GroupContent
         .find()
@@ -36,18 +36,18 @@ router.get('/api/group/contents', function (req, res) {
     //   }, ...]
 })
 
-router.put('/api/group/contents/:contentID', function (req, res) {
+router.put('/api/group/contents', function (req, res) {
 
-    const contentID = req.params.contentID;
+    const contentID = req.query.contentID;
     GroupContent.findByIdAndUpdate(contentID, req.body, (err, groupContent) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })
     });
 })
 
-router.delete('/api/group/contents/:contentID', function (req, res) {
+router.delete('/api/group/contents', function (req, res) {
 
-    const contentID = req.params.contentID;
+    const contentID = req.query.contentID;
     GroupContent.findByIdAndDelete(contentID, (err, groupContent) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })

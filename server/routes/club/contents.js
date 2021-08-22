@@ -17,8 +17,8 @@ router.post('/api/club/contents', function (req, res) {
 
 router.get('/api/club/contents', function (req, res) {
 
-    const skip = (req.body.page - 1) * req.body.perPage;
-    const limit = req.body.perPage;
+    const skip = (req.query.page - 1) * req.query.perPage;
+    const limit = req.query.perPage;
 
     ClubContent
         .find()
@@ -30,9 +30,9 @@ router.get('/api/club/contents', function (req, res) {
         })
 })
 
-router.put('/api/club/contents/:contentID', function (req, res) {
+router.put('/api/club/contents', function (req, res) {
 
-    const contentID = req.params.contentID;
+    const contentID = req.query.contentID;
     ClubContent.findByIdAndUpdate(contentID, req.body, (err, clubContent) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true })
@@ -40,9 +40,9 @@ router.put('/api/club/contents/:contentID', function (req, res) {
 
 })
 
-router.delete('/api/club/contents/:contentID', function (req, res) {
+router.delete('/api/club/contents', function (req, res) {
 
-    const contentID = req.params.contentID;
+    const contentID = req.query.contentID;
     ClubContent.findByIdAndDelete(contentID, (err, clubContent) => {
         if (err) return res.json({ success: false, err })
         return res.status(200).json({ success: true });
