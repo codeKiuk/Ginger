@@ -45,7 +45,7 @@ app.get('/', function (req, res) {
 
 mongoose
     .connect(config.mongoURI, {
-        useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true,
+        useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false,
     })
     .then(() => console.log('mongoDB is connected'))
     .catch(err => console.log(err));
