@@ -4,15 +4,11 @@ import axios from 'axios';
 type Register = {
     loading: Boolean,
     success: Boolean,
-    userID: String,
-    password: String
 }
 
 const initialState: Register = {
     loading: false,
     success: false,
-    userID: "",
-    password: "",
 }
 
 export const postRegister = createAsyncThunk(
@@ -40,8 +36,6 @@ export const registerSlice = createSlice({
         [postRegister.fulfilled.type]: (state, action) => {
             state.loading = false;
             state.success = action.payload.success;
-            state.userID = action.payload.userID;
-            state.password = action.payload.password;
         },
         [postRegister.rejected.type]: (state, action) => {
             state.loading = false;

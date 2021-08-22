@@ -4,6 +4,7 @@ const { User } = require('../../models/User');
 
 router.post('/api/auth/register', async function (req, res) {
 
+
     const user = new User(req.body);
 
     User.findOne({ userID: user.userID }, (err, serchedUser) => {
