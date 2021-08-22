@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { useAppSelector } from '@redux/hooks';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { postLogout } from '@redux/modules/auth/logout';
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -29,10 +30,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Header: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
+    const dispatch = useAppDispatch();
     const auth = useAppSelector(state => state.auth.tokenMatch);
+    const userID = useAppSelector(state => state.auth.userID);
+    const logoutSuccess = useAppSelector(state => state.logout.success);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(anchorEl);
 
+    useEffect(() => {
+        console.log('logoutSuccess: ', logoutSuccess);
+        if (logoutSuccess) {
+            window.location.reload();
+        }
+    }, [logoutSuccess])
+
+    useEffect(() => {
+        console.log('header auth: ', auth)
+    }, [auth])
 
     const onMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -40,6 +54,15 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
 
     const onMenuClose = () => {
         setAnchorEl(null);
+    }
+
+    const onMyPage = () => {
+        onMenuClose();
+        props.history.push(`/contents/${userID}`);
+    }
+
+    const onLogOut = () => {
+        dispatch(postLogout());
     }
 
     return (
@@ -85,9 +108,8 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
                                     open={isMenuOpen}
                                     onClose={onMenuClose}
                                 >
-                                    <MenuItem onClick={onMenuClose}>내 정보</MenuItem>
-                                    <MenuItem onClick={onMenuClose}>내가 작성한 글</MenuItem>
-                                    <MenuItem onClick={onMenuClose}>내가 작성한 댓글</MenuItem>
+                                    <MenuItem onClick={onMyPage}>My Page</MenuItem>
+                                    <MenuItem onClick={onLogOut}>로그아웃</MenuItem>
                                 </Menu>
                             </>
                             :

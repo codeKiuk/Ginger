@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { RouteComponentProps } from 'react-router';
-import { postRegister } from '@redux/modules/register';
-import { postLogin } from '@redux/modules/login';
+import { postRegister } from '@redux/modules/auth/register';
+import { postLogin } from '@redux/modules/auth/login';
 import Copyright from '../commons/Copyright';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -67,7 +67,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
             console.log('loginRes: ', loginRes);
             if (loginRes.payload.success) {
 
-                props.history.push('/');
+                props.history.push('/home');
             }
         } else if (res.payload.isDuplicated) {
 

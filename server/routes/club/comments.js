@@ -3,9 +3,9 @@ const router = express.Router();
 const { ClubComment } = require('../../models/ClubComment');
 const { ClubContent } = require('../../models/ClubContent');
 
-router.post(`/api/club/comments/:contentID`, function (req, res) {
-    // req.params.contentID
-    const contentID = req.params.contentID;
+router.post(`/api/club/comments`, function (req, res) {
+    // req.query.contentID
+    const contentID = req.query.contentID;
     // console.log('contentID: ', contentID)
     ClubContent.findOne({ _id: contentID }, (err, clubContent) => {
         // console.log('clubContent: ', clubContent);
@@ -27,27 +27,27 @@ router.post(`/api/club/comments/:contentID`, function (req, res) {
 
 })
 
-router.get('/api/club/comments/:contentID', function (req, res) {
+router.get('/api/club/comments', function (req, res) {
 
-    const contentID = req.params.contentID;
+    const contentID = req.query.contentID;
     ClubComment.find({ contentID: contentID }, (err, clubComment) => {
         if (err) return res.json({ success: false, err })
         return res.json({ comments: clubComment })
     })
 })
 
-router.put('/api/club/comments/:commentID', function (req, res) {
+router.put('/api/club/comments', function (req, res) {
 
-    const commentID = req.params.commentID;
+    const commentID = req.query.commentID;
     ClubComment.findByIdAndUpdate(commentID, req.body, (err, clubComment) => {
         if (err) return res.json({ success: false, err })
         return res.json({ success: true })
     })
 })
 
-router.delete('/api/club/comments/:commentID', function (req, res) {
+router.delete('/api/club/comments', function (req, res) {
 
-    const commentID = req.params.commentID;
+    const commentID = req.query.commentID;
     ClubComment.findByIdAndDelete(commentID, (err, clubComment) => {
         if (err) return res.json({ success: false, err })
         return res.json({ success: true })

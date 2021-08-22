@@ -4,7 +4,10 @@ const { User } = require('../../models/User');
 
 router.post('/api/auth/register', async function (req, res) {
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 42eb2753a380319cb9a784b017f96eb5618e5dfe
     const user = new User(req.body);
 
     User.findOne({ userID: user.userID }, (err, serchedUser) => {
@@ -22,8 +25,11 @@ router.post('/api/auth/register', async function (req, res) {
             })
     })
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 42eb2753a380319cb9a784b017f96eb5618e5dfe
 })
 
 module.exports = router;
