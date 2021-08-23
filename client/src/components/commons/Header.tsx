@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { postLogout } from '@redux/modules/auth/logout';
-import { setContentsMenuOpen } from '@redux/modules/commons/contentsMenu'
+import { setContentMenuOpen } from '@redux/modules/commons/contentMenu'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -70,85 +70,85 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
     }
 
     const onContentsMenuOpen = () => {
-        dispatch(setContentsMenuOpen(true));
+        dispatch(setContentMenuOpen(true));
     }
 
     return (
-        // <div className={classes.root}>
-        <AppBar className={classes.root}>
-            <Toolbar>
-                <IconButton
-                    edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-                    onClick={() => props.history.push('/home')}
-                >
-                    <HomeIcon />
-                </IconButton>
-                <IconButton
-                    edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-                    onClick={onContentsMenuOpen}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" className={classes.title}>
-                    Ginger
-                </Typography>
+        <div className={classes.root}>
+            <AppBar>
+                <Toolbar>
+                    <IconButton
+                        edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
+                        onClick={() => props.history.push('/home')}
+                    >
+                        <HomeIcon />
+                    </IconButton>
+                    <IconButton
+                        edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
+                        onClick={onContentsMenuOpen}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        Ginger
+                    </Typography>
 
-                {
-                    auth
-                        ?
-                        <>
-                            <IconButton
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={onMyMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
+                    {
+                        auth
+                            ?
+                            <>
+                                <IconButton
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={onMyMenuOpen}
+                                    color="inherit"
+                                >
+                                    <AccountCircle />
+                                </IconButton>
 
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={isMyMenuOpen}
-                                onClose={onMyMenuClose}
-                            >
-                                <MenuItem onClick={onMyPage}>
-                                    <IconButton
-                                        edge="start" className={classes.menuButton} color="inherit"
-                                    >
-                                        <InsertEmoticonIcon />
-                                    </IconButton>
-                                    My Page
-                                </MenuItem>
-                                <MenuItem onClick={onLogOut}>
-                                    <IconButton
-                                        edge="start" className={classes.menuButton} color="inherit"
-                                    >
-                                        <ExitToAppIcon />
-                                    </IconButton>
-                                    로그아웃
-                                </MenuItem>
-                            </Menu>
-                        </>
-                        :
-                        <>
-                            <Button variant="contained" onClick={() => props.history.push('/login')}>
-                                Login
-                            </Button>
-                        </>
-                }
-            </Toolbar>
-        </AppBar>
-        // </div >
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={isMyMenuOpen}
+                                    onClose={onMyMenuClose}
+                                >
+                                    <MenuItem onClick={onMyPage}>
+                                        <IconButton
+                                            edge="start" className={classes.menuButton} color="inherit"
+                                        >
+                                            <InsertEmoticonIcon />
+                                        </IconButton>
+                                        My Page
+                                    </MenuItem>
+                                    <MenuItem onClick={onLogOut}>
+                                        <IconButton
+                                            edge="start" className={classes.menuButton} color="inherit"
+                                        >
+                                            <ExitToAppIcon />
+                                        </IconButton>
+                                        로그아웃
+                                    </MenuItem>
+                                </Menu>
+                            </>
+                            :
+                            <>
+                                <Button variant="contained" onClick={() => props.history.push('/login')}>
+                                    Login
+                                </Button>
+                            </>
+                    }
+                </Toolbar>
+            </AppBar>
+        </div >
     )
 }
