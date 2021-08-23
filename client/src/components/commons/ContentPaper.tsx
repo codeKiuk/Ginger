@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const ContentPaperContainer: React.FC<{}> = () => {
+export const ContentPaper: React.FC<{}> = () => {
     return (
         <div>
 
