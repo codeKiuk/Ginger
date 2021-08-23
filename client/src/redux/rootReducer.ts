@@ -8,6 +8,7 @@ import groupContentReducer from '@redux/modules/home/groupContent'
 import clubContentReducer from '@redux/modules/home/clubContent'
 import groupCommentReducer from '@redux/modules/home/groupComment'
 import clubCommentReducer from '@redux/modules/home/clubComment'
+import createContentReducer from '@redux/modules/home/createContent'
 
 
 const rootReducer = combineReducers({
@@ -16,10 +17,11 @@ const rootReducer = combineReducers({
     auth: authReducer,
     register: registerReducer,
     contentMenu: contentMenuReducer,
-    groupContent: groupCommentReducer,
+    groupContent: groupContentReducer,
     clubContent: clubContentReducer,
     groupComment: groupCommentReducer,
     clubComment: clubCommentReducer,
+    createContent: createContentReducer,
 })
 
 
