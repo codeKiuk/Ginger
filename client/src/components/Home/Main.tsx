@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { Header } from './sections/Header'
+import { Header } from '../commons/Header'
 import Copyright from '../commons/Copyright';
 import { SideBar } from '@components/commons/SideBar';
 
