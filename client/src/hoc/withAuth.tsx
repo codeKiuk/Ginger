@@ -35,7 +35,7 @@ export const withAuth = (WrappedComponent: React.FC<RouteComponentProps>, auth: 
 
 
         return (
-            <div>
+            <div style={{ width: '100vw', height: '100vh' }}>
                 <Suspense fallback={<Loading />}>
                     <WrappedComponent {...props} />
                 </Suspense>
