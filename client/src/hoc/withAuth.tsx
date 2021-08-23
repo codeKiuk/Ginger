@@ -18,11 +18,11 @@ export const withAuth = (WrappedComponent: React.FC<RouteComponentProps>, auth: 
                         console.log('tokenMatch in withAuth: ', tokenMatch);
                         if (tokenMatch) {   // logged in
                             if (auth === 0) {
-                                props.history.push('/');
+                                props.history.push('/home');
                             }
                         } else {    // logged out
                             if (auth === 1) {
-                                props.history.push('/');
+                                props.history.push('/home');
                             }
                         }
                     } else {

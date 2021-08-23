@@ -17,6 +17,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 type Register = {
     userID: String,
@@ -153,15 +154,21 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
 
                         </Grid> */}
                     </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign Up
-                    </Button>
+                    {
+                        loading
+                            ?
+                            <CircularProgress />
+                            :
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Sign Up
+                            </Button>
+                    }
                     <Grid container justifyContent="flex-end">
                         <Grid item>
                             <Link onClick={onLoginClick} variant="body2">

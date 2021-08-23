@@ -1,10 +1,10 @@
 import React from 'react'
+import MyContent from '@components/MyPage/MyContent'
+import { RouteComponentProps } from 'react-router'
 
-const MyPage: React.FC<{}> = () => {
+const MyPage: React.FC<RouteComponentProps> = (props) => {
     return (
-        <div>
-
-        </div>
+        <MyContent {...props} />
     )
 }
 
