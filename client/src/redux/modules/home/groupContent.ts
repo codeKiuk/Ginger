@@ -6,7 +6,8 @@ type GroupContent = {
     success: Boolean,
     page: Number,
     perPage: Number,
-    contents: Array<Object>
+    contents: Array<Object>,
+    contentsCount: Number,
 }
 
 const initialState: GroupContent = {
@@ -14,7 +15,8 @@ const initialState: GroupContent = {
     success: false,
     page: 1,
     perPage: 10,
-    contents: []
+    contents: [],
+    contentsCount: 0,
 }
 
 export const getGroupContents = createAsyncThunk(
@@ -60,6 +62,7 @@ const groupContentSlice = createSlice({
         [getGroupContents.fulfilled.type]: (state, action) => {
             state.loading = false;
             state.contents = action.payload.contents;
+            state.contentsCount = action.payload.contentsCount;
             state.success = true;
         },
         [getGroupContents.rejected.type]: (state, action) => {

@@ -18,15 +18,22 @@ router.post('/api/club/contents', function (req, res) {
 router.get('/api/club/contents', function (req, res) {
 
     const skip = (req.query.page - 1) * req.query.perPage;
-    const limit = req.query.perPage;
+    const limit = Number(req.query.perPage);
+    let count;
+    ClubContent.estimatedDocumentCount({}, function (err, result) {
+        count = result;
+    })
+    console.log('count: ', count)
 
     ClubContent
         .find()
         .skip(skip)
         .limit(limit)
         .exec((err, clubContent) => {
+            console.log('err: ', err);
+            console.log('response clubContent: ', clubContent)
             if (err) return res.json({ success: false, err })
-            return res.status(200).json({ contents: clubContent })
+            return res.status(200).json({ contents: clubContent, contentsCount: count });
         })
 })
 
