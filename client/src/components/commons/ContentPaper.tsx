@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            minWidth: 275,
+            minWidth: 700,
         },
         bullet: {
             display: 'inline-block',
@@ -38,7 +38,11 @@ export const ContentPaper: React.FC<any> = ({ content }) => {
     const classes = useStyles();
     const title = content.title;
     const contents = content.content;
-    const userID = content.userID
+    const userID = content.userID;
+
+    const onOpen = () => {
+
+    }
 
     return (
         <Card className={classes.root}>
@@ -54,7 +58,7 @@ export const ContentPaper: React.FC<any> = ({ content }) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">더 보기</Button>
+                <Button size="small" onClick={onOpen}>더 보기</Button>
             </CardActions>
         </Card>
     )
