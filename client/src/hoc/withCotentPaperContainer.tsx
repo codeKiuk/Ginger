@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import React, { useEffect } from 'react'
 import { ContentSubject } from '@redux/modules/commons/contentMenu'
 import { ContentPaper } from '../components/commons/ContentPaper'
+import { Loading } from '../components/commons/Loading'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -12,8 +13,11 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
 
     const ContentPaperContainer: React.FC<{}> = () => {
 
+        const groupContentLoading = useAppSelector(state => state.groupContent.loading);
+        const clubContentLoading = useAppSelector(state => state.clubContent.loading);
+        const loading = groupContentLoading || clubContentLoading;
         const clubContents = useAppSelector(state => state.clubContent.contents);
-        const groupContents = useAppSelector(state => state.clubContent.contents);
+        const groupContents = useAppSelector(state => state.groupContent.contents);
         /**
          * myContent, profile 추가
          */
@@ -24,7 +28,7 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
 
         const renderPapers = () => {
 
-            let contents: Array<Object> = []
+            let contents: Array<Object>;
 
             switch (contentSubject) {
 
@@ -35,38 +39,35 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
                     contents = groupContents;
                     break;
                 case ContentSubject.MY_CONTENT:
-
+                    contents = clubContents;
                     break;
                 case ContentSubject.MY_COMMENT:
-
+                    contents = clubContents;
                     break;
                 case ContentSubject.PROFILE:
-
+                    contents = clubContents;
                     break;
                 default:
+                    contents = clubContents;
                     break;
             }
 
-            if (!contents) {
 
+            console.log('clubContents: ', clubContents);
+            console.log('groupContents: ', groupContents);
+
+            if (contents) {
+                console.log('contents: ', contents);
                 return (
-                    <div>
-
-                    </div>
+                    <List>
+                        {contents.map(content =>
+                            <ListItem>
+                                <ContentPaper content={content} />
+                            </ListItem>
+                        )}
+                    </List>
                 )
             }
-
-            return (
-                <List>
-                    {contents.map(content => {
-                        <ListItem>
-                            <ContentPaper>
-                            </ContentPaper>
-                            hihi
-                        </ListItem>
-                    })}
-                </List>
-            )
         }
 
         return (
@@ -76,7 +77,8 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
                     backgroundColor: 'whitesmoke',
                     marginTop: '100px',
                 }}>
-                    {renderPapers()}
+                    {loading && <Loading />}
+                    {!loading && renderPapers()}
                 </div>
                 <br />
                 <Pagination />

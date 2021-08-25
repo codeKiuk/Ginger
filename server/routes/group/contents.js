@@ -15,7 +15,12 @@ router.post('/api/group/contents', function (req, res) {
 router.get('/api/group/contents', function (req, res) {
 
     const skip = (req.query.page - 1) * req.query.perPage;
-    const limit = req.query.perPage;
+    const limit = Number(req.query.perPage);
+    let count;
+
+    GroupContent.estimatedDocumentCount({}, function (err, result) {
+        count = result;
+    })
 
     GroupContent
         .find()
@@ -24,7 +29,7 @@ router.get('/api/group/contents', function (req, res) {
         .exec((err, groupContent) => {
             // console.log('groupContent: ', groupContent)
             if (err) return res.json({ success: false, err })
-            return res.status(200).json({ contents: groupContent })
+            return res.status(200).json({ contents: groupContent, contentsCount: count })
         })
 
     // [{

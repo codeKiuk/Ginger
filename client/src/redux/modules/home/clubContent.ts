@@ -6,7 +6,8 @@ type ClubContent = {
     success: Boolean,
     page: Number,
     perPage: Number,
-    contents: Array<Object>
+    contents: Array<Object>,
+    contentsCount: Number,
 }
 
 const initialState: ClubContent = {
@@ -14,7 +15,8 @@ const initialState: ClubContent = {
     success: false,
     page: 1,
     perPage: 10,
-    contents: []
+    contents: [],
+    contentsCount: 0,
 }
 
 export const getClubContents = createAsyncThunk(
@@ -22,6 +24,7 @@ export const getClubContents = createAsyncThunk(
     async ({ page, perPage }: { page: Number, perPage: Number }, ThunkAPI) => {
         try {
             const res = await axios.get('/api/club/contents', { params: { page, perPage } })
+            console.log('clubContent res', res);
             return res.data;
         } catch (err) {
             return ThunkAPI.rejectWithValue(err);
@@ -60,6 +63,7 @@ const clubContentSlice = createSlice({
         [getClubContents.fulfilled.type]: (state, action) => {
             state.loading = false;
             state.contents = action.payload.contents;
+            state.contentsCount = action.payload.contentsCount;
             state.success = true;
         },
         [getClubContents.rejected.type]: (state, action) => {
