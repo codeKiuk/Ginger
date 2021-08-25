@@ -13,11 +13,9 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
 
     const ContentPaperContainer: React.FC<{}> = () => {
 
-        const groupContentLoading = useAppSelector(state => state.groupContent.loading);
-        const clubContentLoading = useAppSelector(state => state.clubContent.loading);
-        const loading = groupContentLoading || clubContentLoading;
-        const clubContents = useAppSelector(state => state.clubContent.contents);
-        const groupContents = useAppSelector(state => state.groupContent.contents);
+        const loading = useAppSelector(state => state.contents.loading);
+        const clubContents = useAppSelector(state => state.contents.clubContents);
+        const groupContents = useAppSelector(state => state.contents.groupContents);
         /**
          * myContent, profile 추가
          */
@@ -75,7 +73,7 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
                 <div style={{
                     width: '750px', height: '750px',
                     backgroundColor: 'whitesmoke',
-                    marginTop: '100px',
+                    marginTop: '100px', overflow: 'auto',
                 }}>
                     {loading && <Loading />}
                     {!loading && renderPapers()}

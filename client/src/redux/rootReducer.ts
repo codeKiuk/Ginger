@@ -4,11 +4,9 @@ import logoutReducer from '@redux/modules/auth/logout'
 import authReducer from '@redux/modules/auth/auth'
 import registerReducer from '@redux/modules/auth/register'
 import contentMenuReducer from '@redux/modules/commons/contentMenu'
-import groupContentReducer from '@redux/modules/home/groupContent'
-import clubContentReducer from '@redux/modules/home/clubContent'
-import groupCommentReducer from '@redux/modules/home/groupComment'
-import clubCommentReducer from '@redux/modules/home/clubComment'
-import createContentReducer from '@redux/modules/home/createContent'
+import createContentModalReducer from '@redux/modules/home/createContentModal'
+import contentsReducer from '@redux/modules/home/contents';
+import commentsReducer from '@redux/modules/home/comments';
 
 
 const rootReducer = combineReducers({
@@ -16,12 +14,10 @@ const rootReducer = combineReducers({
     logout: logoutReducer,
     auth: authReducer,
     register: registerReducer,
+    contents: contentsReducer,
+    comments: commentsReducer,
     contentMenu: contentMenuReducer,
-    groupContent: groupContentReducer,
-    clubContent: clubContentReducer,
-    groupComment: groupCommentReducer,
-    clubComment: clubCommentReducer,
-    createContent: createContentReducer,
+    createContentModal: createContentModalReducer,
 })
 
 

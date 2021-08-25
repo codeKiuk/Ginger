@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { setIsCreateModalOpen } from '@redux/modules/home/createContent';
-import { postClubContent } from '@redux/modules/home/clubContent';
-import { postGroupContent } from '@redux/modules/home/groupContent';
+import { setIsCreateModalOpen } from '@redux/modules/home/createContentModal';
+import { getGroupContents, getClubContents, postClubContent, postGroupContent } from '@redux/modules/home/contents';
 
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField'
@@ -97,8 +96,10 @@ export const CreateContentModal: React.FC<{}> = () => {
 
         if (checkState.club === true) {
             dispatch(postClubContent({ ...data, userID: userID }));
+            dispatch(getClubContents({ page: 1, perPage: 10 }));
         } else {
             dispatch(postGroupContent({ ...data, userID: userID }));
+            dispatch(getGroupContents({ page: 1, perPage: 10 }));
         }
     })
 

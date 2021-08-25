@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { RouteComponentProps } from 'react-router'
 import { setContentMenuOpen, ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu';
+import { getClubContents, getGroupContents } from '@redux/modules/home/contents';
 
 import Divider from '@material-ui/core/Drawer';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,8 +13,6 @@ import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 import TocIcon from '@material-ui/icons/Toc';
-import { getGroupContents } from '@redux/modules/home/groupContent';
-import { getClubContents } from '@redux/modules/home/clubContent';
 
 const myPageContentsMenuList = ['프로필', '내가 쓴 글', '내가 쓴 댓글'];
 const homeContentsMenuList = ['동아리 / 학회', '스터디 / 소모임'];

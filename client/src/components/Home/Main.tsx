@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { getGroupContents } from '@redux/modules/home/groupContent';
-import { getClubContents } from '@redux/modules/home/clubContent';
+import { getGroupContents, getClubContents } from '@redux/modules/home/contents';
 import { RouteComponentProps } from 'react-router'
 import { Header } from '../commons/Header'
 import Copyright from '../commons/Copyright';
 import { SideBar } from '@components/commons/SideBar';
 import { withContentPaperContainer } from '@hoc/withCotentPaperContainer';
 import { ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu';
-import { setIsCreateModalOpen } from '@redux/modules/home/createContent';
+import { setIsCreateModalOpen } from '@redux/modules/home/createContentModal';
 import { CreateContentModal } from './sections/CreateContentModal';
 
 import Button from '@material-ui/core/Button';
@@ -34,7 +33,7 @@ const Main: React.FC<RouteComponentProps> = (props) => {
     const contentSubject = useAppSelector(state => state.contentMenu.contentSubject);
     const ContentPaperContainer = withContentPaperContainer('home', contentSubject);
     const auth = useAppSelector(state => state.auth.tokenMatch);
-    const open = useAppSelector(state => state.createContent.isCreateModalOpen);
+    const open = useAppSelector(state => state.createContentModal.isCreateModalOpen);
 
     useEffect(() => {
         dispatch(setContentSubject(ContentSubject.CLUB_CONTENT));
