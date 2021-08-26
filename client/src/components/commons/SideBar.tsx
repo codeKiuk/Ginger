@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 import TocIcon from '@material-ui/icons/Toc';
+import { getMyContents } from '@redux/modules/myPage/myContents';
+import { getMyComments } from '@redux/modules/myPage/myComments';
 
 const myPageContentsMenuList = ['프로필', '내가 쓴 글', '내가 쓴 댓글'];
 const homeContentsMenuList = ['동아리 / 학회', '스터디 / 소모임'];
@@ -30,6 +32,7 @@ export const SideBar: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const isContentsMenuOpen = Boolean(useAppSelector(state => state.contentMenu.isOpen));
+    const userID = useAppSelector(state => state.auth.userID);
 
     useEffect(() => {
         console.log('props: ', props);
@@ -52,9 +55,11 @@ export const SideBar: React.FC<RouteComponentProps> = (props) => {
                 break;
             case '내가 쓴 글':
                 dispatch(setContentSubject(ContentSubject.MY_CONTENT));
+                dispatch(getMyContents({ userID: userID }))
                 break;
             case '내가 쓴 댓글':
                 dispatch(setContentSubject(ContentSubject.MY_COMMENT));
+                dispatch(getMyComments({ userID: userID }))
                 break;
             case '프로필':
                 dispatch(setContentSubject(ContentSubject.PROFILE));
@@ -95,8 +100,8 @@ export const SideBar: React.FC<RouteComponentProps> = (props) => {
             open={isContentsMenuOpen}
             onClose={onContentsMenuClose}
         >
-            {props.match.path === '/home' && ContentsMenuList(homeContentsMenuList)}
-            {props.match.path === '/my-page' && ContentsMenuList(myPageContentsMenuList)}
+            {props.match.path.includes('/home') && ContentsMenuList(homeContentsMenuList)}
+            {props.match.path.includes('/my-page') && ContentsMenuList(myPageContentsMenuList)}
         </Drawer>
     )
 }

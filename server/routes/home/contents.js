@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { GroupContent } = require('../../models/GroupContent')
 const { Content } = require('../../models/Content')
 
 router.post('/api/club/contents', function (req, res) {

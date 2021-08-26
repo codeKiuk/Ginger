@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { GroupContent } = require('../../models/GroupContent');
-const { GroupComment } = require('../../models/GroupComment');
 const { Content } = require('../../models/Content')
 const { Comment } = require('../../models/Comment');
 

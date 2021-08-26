@@ -17,11 +17,11 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path='/home' component={withAuth(Home, -1)} />
-          <Route path='/home' component={withAuth(Content, -1)} />
+          <Route path='/home/:contentID' component={withAuth(Content, -1)} />
           {/* /home/:contentID */}
           <Route exact path='/login' component={withAuth(Login, 0)} />
           <Route exact path='/register' component={withAuth(Register, 0)} />
-          <Route path='/my-page' component={withAuth(MyPage, 1)} />
+          <Route path='/my-page/:userID' component={withAuth(MyPage, 1)} />
           {/* /my-page/:userID */}
         </Switch>
       </BrowserRouter>
