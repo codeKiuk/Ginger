@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-const ClubContentSchema = mongoose.Schema({
+const CommentSchema = mongoose.Schema({
+    contentType: {
+        type: Number, // 0: Club, 1: Group
+    },
     title: {
         type: String,
         required: true,
@@ -15,6 +18,6 @@ const ClubContentSchema = mongoose.Schema({
     }
 })
 
-const ClubContent = mongoose.model('ClubContent', ClubContentSchema, 'CLUB_CONTENT');
+const Comment = mongoose.model('Comment', CommentSchema, 'COMMENT');
 
-module.exports = { ClubContent };
+module.exports = { Comment };

@@ -1,23 +1,23 @@
 import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-type MyComment = {
+type MyContent = {
     loading: Boolean,
     success: Boolean
-    comments: Array<Object>
+    contents: Array<Object>
 };
 
-const initialState: MyComment = {
+const initialState: MyContent = {
     loading: false,
     success: false,
-    comments: []
+    contents: []
 };
 
-export const getMyComment = createAsyncThunk(
-    'myComment/getMyComment',
+export const getMyContents = createAsyncThunk(
+    'myContent/getMyContent',
     async ({ userID }: { userID: string }, ThunkAPI) => {
         try {
-            const res = await axios.get('/api/my/comments', { params: { userID: userID } });
+            const res = await axios.get('/api/my-contents', { params: { userID: userID } });
             return res.data;
         } catch (err) {
             return ThunkAPI.rejectWithValue(err);
@@ -25,22 +25,22 @@ export const getMyComment = createAsyncThunk(
     }
 );
 
-const myCommentSlice = createSlice({
-    name: 'myComment',
+const myContentsSlice = createSlice({
+    name: 'myContent',
     initialState,
     reducers: {
 
     },
     extraReducers: {
-        [getMyComment.pending.type]: (state, action) => {
+        [getMyContents.pending.type]: (state, action) => {
             state.loading = true;
         },
-        [getMyComment.fulfilled.type]: (state, action) => {
+        [getMyContents.fulfilled.type]: (state, action) => {
             state.loading = false;
-            state.comments = action.payload.comments;
+            state.contents = action.payload.contents;
             state.success = true;
         },
-        [getMyComment.rejected.type]: (state, action) => {
+        [getMyContents.rejected.type]: (state, action) => {
             state.loading = false;
             state.success = false;
         }
@@ -48,4 +48,4 @@ const myCommentSlice = createSlice({
 });
 
 
-export default myCommentSlice.reducer;
+export default myContentsSlice.reducer;

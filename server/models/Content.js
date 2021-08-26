@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-const GroupContentSchema = mongoose.Schema({
+const ContentSchema = mongoose.Schema({
+    contentType: {
+        type: Number, // 0: Club, 1: Group
+    },
     title: {
         type: String,
         required: true,
@@ -15,8 +18,6 @@ const GroupContentSchema = mongoose.Schema({
     }
 })
 
+const Content = mongoose.model('Content', ContentSchema, 'CONTENT');
 
-
-const GroupContent = mongoose.model('GroupContent', GroupContentSchema, "GROUP_CONTENT");
-
-module.exports = { GroupContent };
+module.exports = { Content };
