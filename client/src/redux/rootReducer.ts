@@ -5,8 +5,10 @@ import authReducer from '@redux/modules/auth/auth'
 import registerReducer from '@redux/modules/auth/register'
 import contentMenuReducer from '@redux/modules/commons/contentMenu'
 import createContentModalReducer from '@redux/modules/home/createContentModal'
-import contentsReducer from '@redux/modules/home/contents';
-import commentsReducer from '@redux/modules/home/comments';
+import contentsReducer from '@redux/modules/home/contents'
+import commentsReducer from '@redux/modules/home/comments'
+import myContentsReducer from '@redux/modules/myPage/myContents'
+import myCommentsReducer from '@redux/modules/myPage/myComments'
 
 
 const rootReducer = combineReducers({
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
     register: registerReducer,
     contents: contentsReducer,
     comments: commentsReducer,
+    myContents: myContentsReducer,
+    myComments: myCommentsReducer,
     contentMenu: contentMenuReducer,
     createContentModal: createContentModalReducer,
 })

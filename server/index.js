@@ -10,10 +10,10 @@ const authRoute = require('./routes/auth/auth');
 const loginRoute = require('./routes/auth/login');
 const logoutRoute = require('./routes/auth/logout');
 const registerRoute = require('./routes/auth/register');
-const clubContentRoute = require('./routes/club/contents');
-const clubCommentRoute = require('./routes/club/comments');
-const groupContentRoute = require('./routes/group/contents');
-const groupCommentRoute = require('./routes/group/comments');
+const contentRoute = require('./routes/home/contents');
+const commentRoute = require('./routes/home/comments');
+const myContentRoute = require('./routes/myPage/myContents');
+const myCommentRoute = require('./routes/myPage/myComments');
 
 const corsOption = {
     // origin: [/\.example2\.com$/],
@@ -33,10 +33,10 @@ app.use(authRoute);
 app.use(loginRoute);
 app.use(logoutRoute);
 app.use(registerRoute);
-app.use(clubContentRoute);
-app.use(clubCommentRoute);
-app.use(groupContentRoute);
-app.use(groupCommentRoute);
+app.use(contentRoute);
+app.use(commentRoute);
+app.use(myContentRoute);
+app.use(myCommentRoute);
 
 // SSR
 app.get('/', function (req, res) {
