@@ -31,17 +31,17 @@ const MyContent: React.FC<RouteComponentProps> = (props) => {
 
     useEffect(() => {
         dispatch(setContentSubject(ContentSubject.MY_CONTENT));
-        dispatch(getMyContents({ userID: userID }));
+        dispatch(getMyContents({ userID: userID, page: 1, perPage: 10 }));
 
     }, [])
 
     useEffect(() => {
         switch (contentSubject) {
             case ContentSubject.MY_CONTENT:
-                dispatch(getMyContents({ userID: userID }))
+                dispatch(getMyContents({ userID: userID, page: 1, perPage: 10 }))
                 break;
             case ContentSubject.MY_COMMENT:
-                dispatch(getMyComments({ userID: userID }));
+                dispatch(getMyComments({ userID: userID, page: 1, perPage: 10 }));
                 break;
             default:
                 break;

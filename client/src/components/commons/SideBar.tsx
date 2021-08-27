@@ -55,11 +55,11 @@ export const SideBar: React.FC<RouteComponentProps> = (props) => {
                 break;
             case '내가 쓴 글':
                 dispatch(setContentSubject(ContentSubject.MY_CONTENT));
-                dispatch(getMyContents({ userID: userID }))
+                dispatch(getMyContents({ userID: userID, page: 1, perPage: 10 }))
                 break;
             case '내가 쓴 댓글':
                 dispatch(setContentSubject(ContentSubject.MY_COMMENT));
-                dispatch(getMyComments({ userID: userID }))
+                dispatch(getMyComments({ userID: userID, page: 1, perPage: 10 }))
                 break;
             case '프로필':
                 dispatch(setContentSubject(ContentSubject.PROFILE));

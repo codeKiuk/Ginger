@@ -15,9 +15,9 @@ const initialState: MyComment = {
 
 export const getMyComments = createAsyncThunk(
     'myComment/getMyComment',
-    async ({ userID }: { userID: string }, ThunkAPI) => {
+    async ({ userID, page, perPage }: { userID: string, page: Number, perPage: Number }, ThunkAPI) => {
         try {
-            const res = await axios.get('/api/my-comments', { params: { userID: userID } });
+            const res = await axios.get('/api/my-comments', { params: { userID: userID, page: page, perPage: perPage } });
             return res.data;
         } catch (err) {
             return ThunkAPI.rejectWithValue(err);

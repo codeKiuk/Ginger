@@ -76,13 +76,14 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
     const aboutThisContent = useAppSelector(state => state.comments.singleContent);
 
     useEffect(() => {
-        dispatch(getComments({ contentID: contentID ? contentID : '' }))
-        dispatch(getSingleContent({ contentID: contentID ? contentID : '' }))
+        dispatch(getComments({ contentID: contentID ? contentID : '' }));
+        dispatch(getSingleContent({ contentID: contentID ? contentID : '' }));
     }, [])
 
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset({ comment: '' });
+            renderComments();
         }
     }, [isSubmitSuccessful, reset]);
 
@@ -98,8 +99,13 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
             comment: data.comment,
             contentID: contentID ? contentID : '',
         }))
+            .then(res => {
+                // console.log('postComments res', res);
+                if (res.payload.success) {
+                    dispatch(getComments({ contentID: contentID ? contentID : '' }))
+                }
+            })
 
-        dispatch(getComments({ contentID: contentID ? contentID : '' }))
     })
 
     const renderComments = () => (
