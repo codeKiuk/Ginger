@@ -57,23 +57,24 @@ const Main: React.FC<RouteComponentProps> = (props) => {
     }, [contentSubject])
 
     const onCreateContent = () => {
-        dispatch(setIsCreateModalOpen(true));
+        if (auth) {
+            dispatch(setIsCreateModalOpen(true));
+        } else {
+            props.history.push('/login');
+        }
     }
 
     return (
         <main className={classes.main} >
             {open && <CreateContentModal />}
             <Header {...props} />
-            <ContentPaperContainer />
+            <ContentPaperContainer {...props} />
             <div className={classes.btnGroup} >
-                {auth
-                    &&
-                    <Button variant='outlined' color='primary'
-                        onClick={onCreateContent}
-                    >
-                        글 작성
-                    </Button>
-                }
+                <Button variant='outlined' color='primary'
+                    onClick={onCreateContent}
+                >
+                    글 작성
+                </Button>
             </div>
             <SideBar {...props} />
             <Copyright />
