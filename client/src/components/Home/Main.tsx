@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router'
 import { Header } from '../commons/Header'
 import Copyright from '../commons/Copyright';
 import { SideBar } from '@components/commons/SideBar';
-import { withContentPaperContainer } from '@hoc/withCotentPaperContainer';
+import { withPaperContainer } from '@hoc/withPaperContainer';
 import { ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu';
 import { setIsCreateModalOpen } from '@redux/modules/home/createContentModal';
 import { CreateContentModal } from './sections/CreateContentModal';
@@ -31,7 +31,7 @@ const Main: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const contentSubject = useAppSelector(state => state.contentMenu.contentSubject);
-    const ContentPaperContainer = withContentPaperContainer('home', contentSubject);
+    const PaperContainer = withPaperContainer('home', contentSubject);
     const auth = useAppSelector(state => state.auth.tokenMatch);
     const open = useAppSelector(state => state.createContentModal.isCreateModalOpen);
 
@@ -68,7 +68,7 @@ const Main: React.FC<RouteComponentProps> = (props) => {
         <main className={classes.main} >
             {open && <CreateContentModal />}
             <Header {...props} />
-            <ContentPaperContainer {...props} />
+            <PaperContainer {...props} />
             <div className={classes.btnGroup} >
                 <Button variant='outlined' color='primary'
                     onClick={onCreateContent}
