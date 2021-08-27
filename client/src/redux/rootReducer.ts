@@ -6,7 +6,7 @@ import registerReducer from '@redux/modules/auth/register'
 import contentMenuReducer from '@redux/modules/commons/contentMenu'
 import createContentModalReducer from '@redux/modules/home/createContentModal'
 import contentsReducer from '@redux/modules/home/contents'
-import commentsReducer from '@redux/modules/home/comments'
+import commentsReducer from '@redux/modules/content/comments'
 import myContentsReducer from '@redux/modules/myPage/myContents'
 import myCommentsReducer from '@redux/modules/myPage/myComments'
 
