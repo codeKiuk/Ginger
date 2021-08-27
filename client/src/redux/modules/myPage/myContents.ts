@@ -15,9 +15,9 @@ const initialState: MyContent = {
 
 export const getMyContents = createAsyncThunk(
     'myContent/getMyContent',
-    async ({ userID }: { userID: string }, ThunkAPI) => {
+    async ({ userID, page, perPage }: { userID: string, page: Number, perPage: Number }, ThunkAPI) => {
         try {
-            const res = await axios.get('/api/my-contents', { params: { userID: userID } });
+            const res = await axios.get('/api/my-contents', { params: { userID: userID, page: page, perPage: perPage } });
             return res.data;
         } catch (err) {
             return ThunkAPI.rejectWithValue(err);
