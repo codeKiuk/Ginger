@@ -4,15 +4,15 @@ const CommentSchema = mongoose.Schema({
     contentType: {
         type: Number, // 0: Club, 1: Group
     },
-    title: {
-        type: String,
-        required: true,
-    },
-    content: {
+    comment: {
         type: String,
         required: true,
     },
     userID: {   // for DB reference
+        type: String,
+        required: true,
+    },
+    contentID: {
         type: String,
         required: true,
     }
