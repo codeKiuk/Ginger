@@ -8,21 +8,20 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Pagination from '@material-ui/lab/Pagination'
+import { RouteComponentProps } from 'react-router'
 
-export const withContentPaperContainer = (route: string, contentSubject: ContentSubject): React.FC<{}> => {
+export const withContentPaperContainer = (route: string, contentSubject: ContentSubject): React.FC<RouteComponentProps> => {
 
-    const ContentPaperContainer: React.FC<{}> = () => {
+    const ContentPaperContainer: React.FC<RouteComponentProps> = (props) => {
 
         const loading = useAppSelector(state => state.contents.loading);
         const clubContents = useAppSelector(state => state.contents.clubContents);
         const groupContents = useAppSelector(state => state.contents.groupContents);
+        const myContents = useAppSelector(state => state.myContents.contents);
+        const myComments = useAppSelector(state => state.myComments.comments);
         /**
          * myContent, profile 추가
          */
-
-        useEffect(() => {
-
-        }, [clubContents, groupContents])
 
         const renderPapers = () => {
 
@@ -37,16 +36,16 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
                     contents = groupContents;
                     break;
                 case ContentSubject.MY_CONTENT:
-                    contents = clubContents;
+                    contents = myContents;
                     break;
                 case ContentSubject.MY_COMMENT:
-                    contents = clubContents;
+                    contents = myComments;
                     break;
                 case ContentSubject.PROFILE:
                     contents = clubContents;
                     break;
                 default:
-                    contents = clubContents;
+                    contents = [];
                     break;
             }
 
@@ -60,7 +59,7 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
                     <List>
                         {contents.map(content =>
                             <ListItem>
-                                <ContentPaper content={content} />
+                                <ContentPaper {...content} {...props} />
                             </ListItem>
                         )}
                     </List>
@@ -71,7 +70,7 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
         return (
             <>
                 <div style={{
-                    width: '750px', height: '750px',
+                    width: '80vw', height: '750px',
                     backgroundColor: 'whitesmoke',
                     marginTop: '100px', overflow: 'auto',
                 }}>

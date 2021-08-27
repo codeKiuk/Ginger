@@ -20,16 +20,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         modal: {
             display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-            width: '700px', height: '700px', padding: '10px'
+            width: '80vw', maxWidth: '700px', height: '700px', padding: '10px'
         },
         form: {
             height: '100%',
         },
         checkBox: {
             padding: '10px'
-        },
-        contentField: {
-            // height: '50%'
         },
         btnGroup: {
             display: 'flex',
@@ -175,8 +172,9 @@ export const CreateContentModal: React.FC<{}> = () => {
                                 <>
                                     <TextField
                                         {...field}
+                                        multiline={true}
+                                        rows={23}
                                         placeholder='내용'
-                                        className={classes.contentField}
                                         variant='outlined'
                                         margin='normal'
                                         fullWidth

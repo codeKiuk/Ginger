@@ -6,16 +6,12 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { RouteComponentProps } from 'react-router';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            minWidth: 700,
-        },
-        bullet: {
-            display: 'inline-block',
-            margin: '0 2px',
-            transform: 'scale(0.8)',
+            width: "100%",
         },
         title: {
             fontSize: 14,
@@ -26,22 +22,15 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-type ContentProp = {
-    content: {
-        title: string,
-        contents: string,
-        userID: string,
-    }
-}
-
-export const ContentPaper: React.FC<any> = ({ content }) => {
+export const ContentPaper: React.FC<any> = (props) => {
     const classes = useStyles();
-    const title = content.title;
-    const contents = content.content;
-    const userID = content.userID;
+    const title = props.title;
+    const contents = props.content;
+    const userID = props.userID;
+    const contentID = props._id;
 
     const onOpen = () => {
-
+        props.history.push(`/home/${contentID}`)
     }
 
     return (

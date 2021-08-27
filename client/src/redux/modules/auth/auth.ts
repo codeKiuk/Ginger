@@ -4,7 +4,7 @@ import axios from 'axios';
 type auth = {
     loading: Boolean,
     tokenMatch: Boolean,
-    userID: String,
+    userID: string,
     admin: Number,
 }
 

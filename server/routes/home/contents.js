@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { GroupContent } = require('../../models/GroupContent')
 const { Content } = require('../../models/Content')
 
 router.post('/api/club/contents', function (req, res) {
@@ -60,6 +59,15 @@ router.get('/api/group/contents', function (req, res) {
             if (err) return res.json({ success: false, err })
             return res.status(200).json({ contents: contents, contentsCount: count })
         })
+})
+
+router.get('/api/single-content', function (req, res) {
+    const contentID = req.query.contentID;
+
+    Content.findOne({ _id: contentID }, (err, content) => {
+        if (err) return res.json({ success: false, err })
+        return res.status(200).json({ content: content })
+    })
 })
 
 router.put('/api/contents', function (req, res) {
