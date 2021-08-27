@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
-import { createShorthandPropertyAssignment } from 'typescript';
 
 type Comments = {
     loading: Boolean,
