@@ -11,12 +11,7 @@ import { RouteComponentProps } from 'react-router';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            minWidth: 700,
-        },
-        bullet: {
-            display: 'inline-block',
-            margin: '0 2px',
-            transform: 'scale(0.8)',
+            width: "100%",
         },
         title: {
             fontSize: 14,
@@ -26,16 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 )
-
-// type Props = {
-//     content: {
-//         title: string,
-//         contents: string,
-//         userID: string,
-//     }
-// }
-
-// type ContentPaper = Props & RouteComponentProps<>
 
 export const ContentPaper: React.FC<any> = (props) => {
     const classes = useStyles();

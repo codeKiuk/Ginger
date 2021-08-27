@@ -23,10 +23,6 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
          * myContent, profile 추가
          */
 
-        useEffect(() => {
-
-        }, [clubContents, groupContents, myContents, myComments])
-
         const renderPapers = () => {
 
             let contents: Array<Object>;
@@ -74,7 +70,7 @@ export const withContentPaperContainer = (route: string, contentSubject: Content
         return (
             <>
                 <div style={{
-                    width: '750px', height: '750px',
+                    width: '80vw', height: '750px',
                     backgroundColor: 'whitesmoke',
                     marginTop: '100px', overflow: 'auto',
                 }}>
