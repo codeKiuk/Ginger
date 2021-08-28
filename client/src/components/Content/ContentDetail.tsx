@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import { useForm, Controller } from "react-hook-form";
 import { Header } from '@components/commons/Header'
 import { RouteComponentProps } from 'react-router'
 import { SideBar } from '@components/commons/SideBar'
-import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { getComments, getSingleContent, postComment } from '@redux/modules/content/comments'
 import Copyright from '@components/commons/Copyright'
 import { Loading } from '@components/commons/Loading';
+import { CreateComment } from './sections/CreateComment';
+import { UpdateContentModal } from './sections/UpdateContentModal';
+import { getComments, getSingleContent, deleteComment } from '@redux/modules/content/comments'
+import { deleteContent } from '@redux/modules/home/contents';
+import { setUpdateContentModal } from '@redux/modules/content/updateContentModal';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
@@ -66,8 +71,8 @@ type CreateComment = {
 export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteComponentProps<MatchParams>) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const { control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<CreateComment>();
 
+    const isUpdateModalOpen = useAppSelector(state => state.updateContentModal.isOpen);
     const auth = useAppSelector(state => state.auth.tokenMatch);
     const loading = useAppSelector(state => state.comments.loading);
     const comments = useAppSelector(state => state.comments.comments);
@@ -78,35 +83,22 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
     useEffect(() => {
         dispatch(getComments({ contentID: contentID ? contentID : '' }));
         dispatch(getSingleContent({ contentID: contentID ? contentID : '' }));
+
     }, [])
 
-    useEffect(() => {
-        if (isSubmitSuccessful) {
-            reset({ comment: '' });
-            renderComments();
-        }
-    }, [isSubmitSuccessful, reset]);
+    const onContentDelete = async () => {
+        await dispatch(deleteContent({ contentID: contentID ? contentID : '' }))
+        props.history.push('/home')
+    }
 
-    const onCreateComment = handleSubmit(data => {
+    const onCommentDelete = async (commentID: string) => {
+        await dispatch(deleteComment({ commentID: commentID }));
+        dispatch(getComments({ contentID: contentID ? contentID : '' }));
+    }
 
-        if (!auth) {
-            props.history.push('/login')
-            return;
-        }
-
-        dispatch(postComment({
-            userID: userID,
-            comment: data.comment,
-            contentID: contentID ? contentID : '',
-        }))
-            .then(res => {
-                // console.log('postComments res', res);
-                if (res.payload.success) {
-                    dispatch(getComments({ contentID: contentID ? contentID : '' }))
-                }
-            })
-
-    })
+    const onUpdate = () => {
+        dispatch(setUpdateContentModal(true));
+    }
 
     const renderComments = () => (
         <>
@@ -122,6 +114,13 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
                                 작성자: {comment.userID}
                             </Typography>
                         </CardContent>
+                        {
+                            comment.userID === userID
+                            &&
+                            <CardActions>
+                                <Button onClick={() => onCommentDelete(comment._id)} color="secondary">삭제</Button>
+                            </CardActions>
+                        }
                     </Card>
                 </ListItem>
             ))}
@@ -138,8 +137,12 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
                 marginTop: '100px', overflow: 'auto',
             }}>
                 {loading && <Loading />}
+
+                {/* 글 불러오기 로딩 완료 */}
                 {!loading
                     &&
+
+                    // 제목
                     <List style={{ width: '100%', height: '100%' }}>
                         <ListItem >
                             <Card className={classes.titleCard}>
@@ -153,6 +156,8 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
                                 </CardContent>
                             </Card>
                         </ListItem>
+
+                        {/* 본문 */}
                         <ListItem >
                             <Card className={classes.bodyCard}>
                                 <CardContent>
@@ -160,50 +165,28 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
                                         {aboutThisContent?.content}
                                     </Typography>
                                 </CardContent>
+                                {userID === aboutThisContent?.userID
+                                    &&
+                                    <CardActions>
+                                        <Button variant="outlined" color="primary" onClick={onUpdate}>수정</Button>
+                                        <Button variant="outlined" color="secondary" onClick={onContentDelete}>삭제</Button>
+                                    </CardActions>
+                                }
                             </Card>
                         </ListItem>
+
+                        {/* 댓글 */}
                         {renderComments()}
                     </List>
                 }
             </main>
+            {/* 글 수정 */}
+            {isUpdateModalOpen && <UpdateContentModal contentID={contentID} />}
             <Header {...props} />
             <SideBar {...props} />
             <br />
-            <div className={classes.commentInputContainer}>
-                <form
-                    onSubmit={onCreateComment}
-                >
-                    <Controller
-                        name="comment"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) =>
-                            <>
-                                <TextField
-                                    {...field}
-                                    multiline={true}
-                                    rows={3}
-                                    placeholder='댓글'
-                                    variant='outlined'
-                                    margin='normal'
-                                    fullWidth
-                                    id='comment'
-                                    autoFocus
-                                />
-                                {errors.comment?.type === 'required' && <p className={classes.errorMessage}>내용을 입력해주세요</p>}
-                            </>
-                        }
-                    />
-                    <div className={classes.btnGroup} >
-                        <Button variant='outlined' color='primary'
-                            onClick={onCreateComment}
-                        >
-                            댓글 작성
-                        </Button>
-                    </div>
-                </form>
-            </div>
-
+            {/* 댓글 작성 */}
+            <CreateComment {...props} contentID={contentID} renderComments={renderComments} />
             <Copyright />
         </div >
     )

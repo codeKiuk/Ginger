@@ -5,6 +5,7 @@ type Comments = {
     loading: Boolean,
     success: Boolean,
     comments: Array<{
+        _id: string,
         userID: string,
         comment: string,
         contentType: Number,
@@ -65,6 +66,18 @@ export const postComment = createAsyncThunk(
     }
 )
 
+export const deleteComment = createAsyncThunk(
+    'comments/deleteComment',
+    async ({ commentID }: { commentID: string }, ThunkAPI) => {
+        try {
+            const res = await axios.delete('/api/comments', { data: { commentID: commentID } })
+            return res.data;
+        } catch (err) {
+            return ThunkAPI.rejectWithValue(err);
+        }
+    }
+)
+
 const commentsSlice = createSlice({
     name: 'comments',
     initialState,
@@ -72,6 +85,7 @@ const commentsSlice = createSlice({
 
     },
     extraReducers: {
+        // Get Comments of This Content
         [getComments.pending.type]: (state, action) => {
             state.loading = true;
         },
@@ -84,6 +98,7 @@ const commentsSlice = createSlice({
             state.loading = false;
             state.success = false;
         },
+        // Get Info of This Content
         [getSingleContent.pending.type]: (state, action) => {
             state.loading = true;
         },
@@ -96,6 +111,7 @@ const commentsSlice = createSlice({
             state.loading = false;
             state.success = false;
         },
+        // Post Comment
         [postComment.pending.type]: (state, action) => {
             state.loading = true;
         },
@@ -104,6 +120,18 @@ const commentsSlice = createSlice({
             state.success = true;
         },
         [postComment.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.success = false;
+        },
+        // Delete Comment
+        [deleteComment.pending.type]: (state, action) => {
+            state.loading = true;
+        },
+        [deleteComment.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.success = true;
+        },
+        [deleteComment.rejected.type]: (state, action) => {
             state.loading = false;
             state.success = false;
         }
