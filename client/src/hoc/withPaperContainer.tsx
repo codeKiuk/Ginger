@@ -20,13 +20,6 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
         const groupContents = useAppSelector(state => state.contents.groupContents);
         const myContents = useAppSelector(state => state.myContents.contents);
         const myComments = useAppSelector(state => state.myComments.comments);
-        /**
-         * myContent, profile 추가
-         */
-
-        const renderProfile = () => {
-
-        }
 
         const renderContents = (contents: Array<Object>) => {
 
@@ -78,9 +71,6 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
                 case ContentSubject.MY_COMMENT:
                     return renderMyComments(myComments);
 
-                case ContentSubject.PROFILE:
-
-                    break;
                 default:
                     break;
             }

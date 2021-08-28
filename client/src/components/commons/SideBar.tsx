@@ -16,7 +16,7 @@ import TocIcon from '@material-ui/icons/Toc';
 import { getMyContents } from '@redux/modules/myPage/myContents';
 import { getMyComments } from '@redux/modules/myPage/myComments';
 
-const myPageContentsMenuList = ['프로필', '내가 쓴 글', '내가 쓴 댓글'];
+const myPageContentsMenuList = ['내가 쓴 글', '내가 쓴 댓글'];
 const homeContentsMenuList = ['동아리 / 학회', '스터디 / 소모임'];
 
 const useStyles = makeStyles({
@@ -61,10 +61,6 @@ export const SideBar: React.FC<RouteComponentProps> = (props) => {
                 dispatch(setContentSubject(ContentSubject.MY_COMMENT));
                 dispatch(getMyComments({ userID: userID, page: 1, perPage: 10 }))
                 break;
-            case '프로필':
-                dispatch(setContentSubject(ContentSubject.PROFILE));
-                break;
-
             default:
                 break;
         }

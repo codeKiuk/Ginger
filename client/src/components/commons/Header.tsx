@@ -128,7 +128,7 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
                                         >
                                             <InsertEmoticonIcon />
                                         </IconButton>
-                                        My Page
+                                        My Page:<p style={{ marginLeft: '2px' }}>{userID}</p>
                                     </MenuItem>
                                     <MenuItem onClick={onLogOut}>
                                         <IconButton
