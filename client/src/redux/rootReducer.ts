@@ -9,7 +9,7 @@ import contentsReducer from '@redux/modules/home/contents'
 import commentsReducer from '@redux/modules/content/comments'
 import myContentsReducer from '@redux/modules/myPage/myContents'
 import myCommentsReducer from '@redux/modules/myPage/myComments'
-
+import updateContentModalReducer from '@redux/modules/content/updateContentModal'
 
 const rootReducer = combineReducers({
     login: loginReducer,
@@ -22,6 +22,7 @@ const rootReducer = combineReducers({
     myComments: myCommentsReducer,
     contentMenu: contentMenuReducer,
     createContentModal: createContentModalReducer,
+    updateContentModal: updateContentModalReducer,
 })
 
 
