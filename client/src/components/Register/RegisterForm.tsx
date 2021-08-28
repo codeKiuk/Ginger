@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { RouteComponentProps } from 'react-router';
-import { postRegister } from '@redux/modules/auth/register';
+import { getIsUserIDduplicated, postRegister } from '@redux/modules/auth/register';
 import { postLogin } from '@redux/modules/auth/login';
 import Copyright from '../commons/Copyright';
 
@@ -20,9 +20,8 @@ import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 type Register = {
-    userID: String,
-    password: String,
-    confirmPassword: String
+    userID: string,
+    password: string,
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -43,35 +42,31 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    errorMessage: {
+        fontSize: '0.8rem',
+        padding: '10px',
+        margin: '0px',
+        color: 'red',
+    },
 }));
 
 export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const loading = useAppSelector(state => state.register.loading);
-    const { control, handleSubmit, formState: { errors } } = useForm<Register>();
+    const { control, handleSubmit, formState: { errors }, } = useForm<Register>();
 
-    useEffect(() => {
-
-    }, [loading])
 
     const onSubmit = handleSubmit(async (data) => {
-        // console.log(data);
+
         const res = await dispatch(postRegister(data));
-        console.log('register response', res);
-        // .then(res => {
-        //     // 이메일 중복 체크 => if !res.payload.success && res.payload.isDuplicated
-        //     console.log(res)
-        // });
+
         if (res.payload.success) {
             const loginRes = await dispatch(postLogin({ userID: res.payload.userID, password: res.payload.password }));
             console.log('loginRes: ', loginRes);
             if (loginRes.payload.success) {
-
                 props.history.push('/home');
             }
-        } else if (res.payload.isDuplicated) {
-
         } else {    // server error
 
         }
@@ -98,17 +93,31 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
                                 name='userID'
                                 control={control}
                                 defaultValue=""
+                                rules={{
+                                    required: true,
+                                    pattern: /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i,
+                                    validate: {
+                                        asyncValidate: async (value) => {
+                                            const res = await dispatch(getIsUserIDduplicated({ userID: value }));
+                                            return res.payload.isDuplicated === false;
+                                        }
+                                    }
+                                }}
                                 render={({ field }) =>
-                                    <TextField
-                                        {...field}
-                                        variant="outlined"
-                                        required
-                                        fullWidth
-                                        id="email"
-                                        label="Email Address"
-                                        name="email"
-                                        autoComplete="email"
-                                    />
+                                    <>
+                                        <TextField
+                                            {...field}
+                                            placeholder="이메일을 입력해주세요"
+                                            variant="outlined"
+                                            fullWidth
+                                            id="email"
+                                            label="Email Address"
+                                        // autoComplete="email"
+                                        />
+                                        {errors.userID?.type === 'required' && <p className={classes.errorMessage}>이메일을 입력해주세요.</p>}
+                                        {errors.userID?.type === 'pattern' && <p className={classes.errorMessage}>이메일 형식이 맞지 않습니다.</p>}
+                                        {errors.userID?.type === 'asyncValidate' && <p className={classes.errorMessage}>이미 존재하는 이메일입니다.</p>}
+                                    </>
                                 }
                             />
                         </Grid>
@@ -117,42 +126,23 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
                                 name='password'
                                 control={control}
                                 defaultValue=""
+                                rules={{ required: true }}
                                 render={({ field }) =>
-                                    <TextField
-                                        {...field}
-                                        variant="outlined"
-                                        required
-                                        fullWidth
-                                        name="password"
-                                        label="Password"
-                                        type="password"
-                                        id="password"
-                                        autoComplete="current-password"
-                                    />
+                                    <>
+                                        <TextField
+                                            {...field}
+                                            placeholder="비밀번호를 입력해주세요"
+                                            variant="outlined"
+                                            fullWidth
+                                            id="password"
+                                            autoComplete="current-password"
+                                        />
+                                        {errors.password?.type === 'required' && <p className={classes.errorMessage}>비밀번호를 입력해주세요.</p>}
+                                    </>
                                 }
+
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                            <Controller
-                                name='confirmPassword'
-                                control={control}
-                                defaultValue=""
-                                render={({ field }) =>
-                                    <TextField
-                                        {...field}
-                                        variant="outlined"
-                                        required
-                                        fullWidth
-                                        name="password"
-                                        label="Confirm Password"
-                                        type="password"
-                                        id="password"
-                                        autoComplete="current-password"
-                                    />
-                                }
-                            />
-
-                        </Grid> */}
                     </Grid>
                     {
                         loading
