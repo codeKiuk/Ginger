@@ -8,7 +8,7 @@ import Copyright from '@components/commons/Copyright'
 import { Loading } from '@components/commons/Loading';
 import { CreateComment } from './sections/CreateComment';
 import { UpdateContentModal } from './sections/UpdateContentModal';
-import { getComments, getSingleContent, postComment, } from '@redux/modules/content/comments'
+import { getComments, getSingleContent, deleteComment } from '@redux/modules/content/comments'
 import { deleteContent } from '@redux/modules/home/contents';
 import { setUpdateContentModal } from '@redux/modules/content/updateContentModal';
 
@@ -86,9 +86,14 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
 
     }, [])
 
-    const onDelete = async () => {
+    const onContentDelete = async () => {
         await dispatch(deleteContent({ contentID: contentID ? contentID : '' }))
         props.history.push('/home')
+    }
+
+    const onCommentDelete = async (commentID: string) => {
+        await dispatch(deleteComment({ commentID: commentID }));
+        dispatch(getComments({ contentID: contentID ? contentID : '' }));
     }
 
     const onUpdate = () => {
@@ -109,6 +114,13 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
                                 작성자: {comment.userID}
                             </Typography>
                         </CardContent>
+                        {
+                            comment.userID === userID
+                            &&
+                            <CardActions>
+                                <Button onClick={() => onCommentDelete(comment._id)} color="secondary">삭제</Button>
+                            </CardActions>
+                        }
                     </Card>
                 </ListItem>
             ))}
@@ -157,7 +169,7 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
                                     &&
                                     <CardActions>
                                         <Button variant="outlined" color="primary" onClick={onUpdate}>수정</Button>
-                                        <Button variant="outlined" color="secondary" onClick={onDelete}>삭제</Button>
+                                        <Button variant="outlined" color="secondary" onClick={onContentDelete}>삭제</Button>
                                     </CardActions>
                                 }
                             </Card>

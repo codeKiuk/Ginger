@@ -31,16 +31,8 @@ export const CommentPaper: React.FC<any> = (props) => {
         _id: props._id,
     }
 
-    useEffect(() => {
-
-    }, [])
-
     const onOpen = () => {
         props.history.push(`/home/${aboutThisComment.contentID}`);
-    }
-
-    const onDelete = () => {
-
     }
 
     return (
@@ -58,8 +50,7 @@ export const CommentPaper: React.FC<any> = (props) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={onOpen} variant="outlined" >더 보기</Button>
-                <Button onClick={onDelete} variant="outlined" color="secondary" >삭제</Button>
+                <Button onClick={onOpen} variant="text" >글 보기</Button>
             </CardActions>
         </Card>
     )
