@@ -20,11 +20,24 @@ const initialState: Contents = {
     groupContents: [],
     contentsCount: 0,
 }
+
+export const deleteContent = createAsyncThunk(
+    'contents/deleteContent',
+    async ({ contentID }: { contentID: string }, ThunkAPI) => {
+        try {
+            const res = await axios.delete('/api/contents', { data: { contentID: contentID } });
+            return res.data;
+        } catch (err) {
+            return ThunkAPI.rejectWithValue(err);
+        }
+    }
+)
+
 /**
  *              Group Contents
  */
 export const getGroupContents = createAsyncThunk(
-    'groupContent/getGroupContent',
+    'contents/getGroupContent',
     async ({ page, perPage }: { page: Number, perPage: Number }, ThunkAPI) => {
         try {
             const res = await axios.get('/api/group/contents', { params: { page, perPage } })
@@ -35,7 +48,7 @@ export const getGroupContents = createAsyncThunk(
     }
 )
 export const postGroupContent = createAsyncThunk(
-    'groupContent/postGroupContent',
+    'contents/postGroupContent',
     async ({ title, content, userID }: { title: String, content: String, userID: String }, ThunkAPI) => {
         try {
             const res = await axios.post('/api/group/contents', { title, content, userID })
@@ -50,7 +63,7 @@ export const postGroupContent = createAsyncThunk(
  *              Club Contents
  */
 export const getClubContents = createAsyncThunk(
-    'clubContent/getClubContent',
+    'contents/getClubContent',
     async ({ page, perPage }: { page: Number, perPage: Number }, ThunkAPI) => {
         try {
             const res = await axios.get('/api/club/contents', { params: { page, perPage } })
@@ -63,7 +76,7 @@ export const getClubContents = createAsyncThunk(
 )
 
 export const postClubContent = createAsyncThunk(
-    'clubContent/postClubContent',
+    'contents/postClubContent',
     async ({ title, content, userID }: { title: String, content: String, userID: String }, ThunkAPI) => {
         try {
             const res = await axios.post('/api/club/contents', { title, content, userID })
@@ -137,7 +150,19 @@ const contentsSlice = createSlice({
         [postClubContent.rejected.type]: (state, action) => {
             state.loading = false;
             state.success = false;
-        }
+        },
+        // Delete Content
+        [deleteContent.pending.type]: (state, action) => {
+            state.loading = true;
+        },
+        [deleteContent.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.success = true;
+        },
+        [deleteContent.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.success = false;
+        },
     }
 })
 
