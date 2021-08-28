@@ -4,7 +4,7 @@ import { Header } from '../../components/commons/Header'
 import { SideBar } from '@components/commons/SideBar'
 import Copyright from '@components/commons/Copyright'
 import { RouteComponentProps } from 'react-router'
-import { withContentPaperContainer } from '@hoc/withCotentPaperContainer'
+import { withPaperContainer } from '@hoc/withPaperContainer'
 import { ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu';
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import { getMyComments } from '@redux/modules/myPage/myComments'
@@ -27,7 +27,7 @@ const MyContent: React.FC<RouteComponentProps> = (props) => {
     const dispatch = useAppDispatch();
     const contentSubject = useAppSelector(state => state.contentMenu.contentSubject);
     const userID = useAppSelector(state => state.auth.userID);
-    const ContentPaperContainer = withContentPaperContainer('my-page', contentSubject);
+    const PaperContainer = withPaperContainer('my-page', contentSubject);
 
     useEffect(() => {
         dispatch(setContentSubject(ContentSubject.MY_CONTENT));
@@ -51,7 +51,7 @@ const MyContent: React.FC<RouteComponentProps> = (props) => {
     return (
         <main className={classes.main}>
             <Header {...props} />
-            <ContentPaperContainer {...props} />
+            <PaperContainer {...props} />
             <SideBar {...props} />
             <Copyright />
         </main>
