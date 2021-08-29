@@ -21,6 +21,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { ContentSubject } from '@redux/modules/commons/contentMenu';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -79,6 +80,7 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
     const contentID = props.match.params.contentID;
     const userID = useAppSelector(state => state.auth.userID);
     const aboutThisContent = useAppSelector(state => state.comments.singleContent);
+    const contentSubject = useAppSelector(state => state.contentMenu.contentSubject);
 
     useEffect(() => {
         dispatch(getComments({ contentID: contentID ? contentID : '' }));
@@ -88,7 +90,11 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
 
     const onContentDelete = async () => {
         await dispatch(deleteContent({ contentID: contentID ? contentID : '' }))
-        props.history.push('/home')
+        if (contentSubject === ContentSubject.MY_CONTENT || contentSubject === ContentSubject.MY_COMMENT) {
+            props.history.push(`/my-page/${userID}`)
+        } else {
+            props.history.push('/home')
+        }
     }
 
     const onCommentDelete = async (commentID: string) => {
