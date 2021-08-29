@@ -33,7 +33,7 @@ export const Pagination = () => {
     const [perPage, setPerPage] = useState(10);
     const totalDocs = useAppSelector(state => state.pagination.totalDocs);
     const totalPages = Math.ceil(totalDocs / perPage);
-    const perPageList = 2; // 몇 쪽씩 페이지네이션 보여줄지 => ex. 10이면 1~10 11~20 / 5면 1~5 6~11 등
+    const perPageList = 10; // 몇 쪽씩 페이지네이션 보여줄지 => ex. 10이면 1~10 11~20 / 5면 1~5 6~11 등
 
     const [pageList, setPageList] = useState(Array(0));
 
