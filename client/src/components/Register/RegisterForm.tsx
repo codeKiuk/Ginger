@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(3),
     },
     submit: {
@@ -106,12 +106,10 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
                                     <>
                                         <TextField
                                             {...field}
-                                            placeholder="이메일을 입력해주세요"
                                             variant="outlined"
                                             fullWidth
                                             id="email"
-                                            label="Email Address"
-                                        // autoComplete="email"
+                                            placeholder="이메일을 입력해주세요"
                                         />
                                         {errors.userID?.type === 'required' && <p className={classes.errorMessage}>이메일을 입력해주세요.</p>}
                                         {errors.userID?.type === 'pattern' && <p className={classes.errorMessage}>이메일 형식이 맞지 않습니다.</p>}
