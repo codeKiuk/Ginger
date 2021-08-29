@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { setPage } from '@redux/modules/commons/pagination'
 import { ContentSubject } from '@redux/modules/commons/contentMenu'
 import contents, { getClubContents, getGroupContents } from '@redux/modules/home/contents'
 import { getMyContents } from '@redux/modules/myPage/myContents'
@@ -30,37 +29,47 @@ export const Pagination = () => {
     const loading = contentsLoading || myCommentsLoading || myContentsLoading;
     const contentSubject = useAppSelector(state => state.contentMenu.contentSubject);
     const userID = useAppSelector(state => state.auth.userID);
-    // const page = useAppSelector(state => state.pagination.page);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(10);
-    // const perPage = useAppSelector(state => state.pagination.perPage);
     const totalDocs = useAppSelector(state => state.pagination.totalDocs);
-    // const [totalPages, setTotalPages] = useState(1);
     const totalPages = Math.ceil(totalDocs / perPage);
+    const perPageList = 2; // 몇 쪽씩 페이지네이션 보여줄지 => ex. 10이면 1~10 11~20 / 5면 1~5 6~11 등
 
     const [pageList, setPageList] = useState(Array(0));
 
     useEffect(() => {
-        console.log('PAGINATION MOUNTED')
-        // setTotalPages(Math.ceil(totalDocs / perPage));
-        console.log('page: ', page)
-        console.log('total docs: ', totalDocs);
-        console.log('total pages: ', totalPages);
+        // console.log('PAGINATION MOUNTED')
+        // console.log('page: ', page)
+        // console.log('total docs: ', totalDocs);
+        // console.log('total pages: ', totalPages);
         if (totalDocs === -1) {
             return;
         }
-        if (page % 10 === 1) {
-            // page === 1 or 11 or 21 ... 
+
+        settingPageList(totalPages);
+
+    }, [totalDocs, contentSubject])
+
+    useEffect(() => {
+        // page === 1, 11, 21, 31 ... 등 각 pageList (perPageList === 10) 의 첫 번쩨 쪽일때
+        if (page % perPageList === 1) {
             settingPageList(totalPages);
         }
+        // page === 10, 20, 30 ... 등 각 pageList (perPageList === 10) 의 마지막 쪽일때
+        else if (page % perPageList === 0) {
+            setPageList(Array.from(new Array(perPageList).keys()).map(x => x + page - perPageList + 1))
+        }
+        // 1 - 10 에서 첫번째와 마지막 쪽이 아닌 쪽들의 경우 => pageList 변화 필요 없다
+        else {
 
-    }, [totalDocs, contentSubject, page])
+        }
+    }, [page])
 
     const settingPageList = (totalPages: number) => {
-        if (totalPages < page + 9) {
+        if (totalPages < page + (perPageList - 1)) {
             setPageList(Array.from(new Array(totalPages - page + 1).keys()).map(x => x + page));
         } else {
-            setPageList(Array.from(new Array(10).keys()).map(x => x + page));
+            setPageList(Array.from(new Array(perPageList).keys()).map(x => x + page));
         }
     }
 
@@ -87,7 +96,6 @@ export const Pagination = () => {
     }
 
     const onBefore = () => {
-        console.log('onBefore page: ', page)
         if (page - 1 === 0) {
             return;
         }
@@ -105,7 +113,6 @@ export const Pagination = () => {
     }
 
     const renderPageList = () => {
-        console.log('pageList.length(): ', pageList.length)
         return pageList.map(pageNum => {
 
             if (pageNum === page) {
@@ -126,7 +133,6 @@ export const Pagination = () => {
 
     return (
         <div className={classes.container}>
-            {/* {loading && <Loading />} */}
             {loading && <div></div>}
             {!loading &&
                 <>

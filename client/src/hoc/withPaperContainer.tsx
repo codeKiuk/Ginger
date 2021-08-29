@@ -27,8 +27,6 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
         const myComments = useAppSelector(state => state.myComments.comments);
         const myCommentsCount = useAppSelector(state => state.myComments.commentsCount);
 
-        const isPagination = true;
-
         const renderContents = (contents: Array<Object>) => {
 
             return (
@@ -103,7 +101,7 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
                     {!loading && renderPapers()}
                 </div>
                 <br />
-                {isPagination && <Pagination />}
+                <Pagination />
             </>
         )
     }
