@@ -9,8 +9,6 @@ import { setTotalDocs } from '@redux/modules/commons/pagination'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
-import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { RouteComponentProps } from 'react-router'
 
 export const withPaperContainer = (route: string, contentSubject: ContentSubject): React.FC<RouteComponentProps> => {
@@ -66,22 +64,18 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
             switch (contentSubject) {
 
                 case ContentSubject.CLUB_CONTENT:
-                    console.log('contentsCount: ', contentsCount);
                     dispatch(setTotalDocs(contentsCount));
                     return renderContents(clubContents);
 
                 case ContentSubject.GROUP_CONTENT:
-                    console.log('contentsCount: ', contentsCount);
                     dispatch(setTotalDocs(contentsCount));
                     return renderContents(groupContents);
 
                 case ContentSubject.MY_CONTENT:
-                    console.log('myContentsCount: ', myContentsCount);
                     dispatch(setTotalDocs(myContentsCount));
                     return renderContents(myContents);
 
                 case ContentSubject.MY_COMMENT:
-                    console.log('myCommentsCount: ', myCommentsCount);
                     dispatch(setTotalDocs(myCommentsCount));
                     return renderMyComments(myComments);
 

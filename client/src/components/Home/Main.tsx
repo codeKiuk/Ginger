@@ -37,7 +37,6 @@ const Main: React.FC<RouteComponentProps> = (props) => {
     const perPage = useAppSelector(state => state.pagination.perPage);
 
     useEffect(() => {
-        console.log('useeffect mount')
 
         switch (contentSubject) {
             case ContentSubject.CLUB_CONTENT:

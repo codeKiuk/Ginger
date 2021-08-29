@@ -42,14 +42,14 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
     const isMyMenuOpen = Boolean(anchorEl);
 
     useEffect(() => {
-        console.log('logoutSuccess: ', logoutSuccess);
+        // console.log('logoutSuccess: ', logoutSuccess);
         if (logoutSuccess) {
             window.location.reload();
         }
     }, [logoutSuccess])
 
     useEffect(() => {
-        console.log('header auth: ', auth)
+        // console.log('header auth: ', auth)
     }, [auth])
 
     const onMyMenuOpen = (event: React.MouseEvent<HTMLElement>) => {

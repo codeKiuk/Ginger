@@ -63,7 +63,6 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
 
         if (res.payload.success) {
             const loginRes = await dispatch(postLogin({ userID: res.payload.userID, password: res.payload.password }));
-            console.log('loginRes: ', loginRes);
             if (loginRes.payload.success) {
                 props.history.push('/home');
             }

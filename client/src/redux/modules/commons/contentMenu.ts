@@ -21,7 +21,6 @@ const contentMenuSlice = createSlice({
         },
         setContentSubject: (state, action: PayloadAction<ContentSubject>) => {
             state.contentSubject = action.payload;
-            console.log('state.contentSubject: ', state.contentSubject);
         }
     }
 })

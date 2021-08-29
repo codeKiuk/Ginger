@@ -82,7 +82,6 @@ const LoginForm: React.FC<RouteComponentProps> = (props) => {
     }, [loginSuccess])
 
     const onSubmit = handleSubmit(data => {
-        console.log('data: ', data);
         dispatch(postLogin(data))
             .then((res) => {
                 if (!res.payload.success) {
