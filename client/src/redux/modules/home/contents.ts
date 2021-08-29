@@ -67,7 +67,6 @@ export const getClubContents = createAsyncThunk(
     async ({ page, perPage }: { page: Number, perPage: Number }, ThunkAPI) => {
         try {
             const res = await axios.get('/api/club/contents', { params: { page, perPage } })
-            console.log('clubContent res', res);
             return res.data;
         } catch (err) {
             return ThunkAPI.rejectWithValue(err);
