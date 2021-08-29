@@ -5,12 +5,14 @@ type MyContent = {
     loading: Boolean,
     success: Boolean
     contents: Array<Object>
+    contentsCount: number,
 };
 
 const initialState: MyContent = {
     loading: false,
     success: false,
-    contents: []
+    contents: [],
+    contentsCount: -1,
 };
 
 export const getMyContents = createAsyncThunk(
@@ -38,6 +40,7 @@ const myContentsSlice = createSlice({
         [getMyContents.fulfilled.type]: (state, action) => {
             state.loading = false;
             state.contents = action.payload.contents;
+            state.contentsCount = action.payload.contentsCount;
             state.success = true;
         },
         [getMyContents.rejected.type]: (state, action) => {

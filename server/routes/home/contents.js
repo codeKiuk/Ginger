@@ -22,15 +22,12 @@ router.post('/api/group/contents', function (req, res) {
     })
 })
 
-router.get('/api/club/contents', function (req, res) {
+router.get('/api/club/contents', async function (req, res) {
 
     const skip = (req.query.page - 1) * req.query.perPage;
     const limit = Number(req.query.perPage);
-    let count;
 
-    Content.estimatedDocumentCount({ contentType: 0 }, function (err, result) {
-        count = result;
-    })
+    const count = await Content.estimatedDocumentCount({ contentType: 0 })
 
     Content
         .find({ contentType: 0 })
@@ -42,14 +39,11 @@ router.get('/api/club/contents', function (req, res) {
         })
 })
 
-router.get('/api/group/contents', function (req, res) {
+router.get('/api/group/contents', async function (req, res) {
     const skip = (req.query.page - 1) * req.query.perPage;
     const limit = Number(req.query.perPage);
-    let count;
 
-    Content.estimatedDocumentCount({ contentType: 1 }, function (err, result) {
-        count = result;
-    })
+    const count = await Content.countDocuments({ contentType: 1 })
 
     Content
         .find({ contentType: 1 })
@@ -59,6 +53,8 @@ router.get('/api/group/contents', function (req, res) {
             if (err) return res.json({ success: false, err })
             return res.status(200).json({ contents: contents, contentsCount: count })
         })
+
+
 })
 
 router.get('/api/single-content', function (req, res) {

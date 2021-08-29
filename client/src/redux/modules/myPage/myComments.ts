@@ -4,13 +4,15 @@ import axios from 'axios'
 type MyComment = {
     loading: Boolean,
     success: Boolean
-    comments: Array<Object>
+    comments: Array<Object>,
+    commentsCount: number,
 };
 
 const initialState: MyComment = {
     loading: false,
     success: false,
-    comments: []
+    comments: [],
+    commentsCount: -1,
 };
 
 export const getMyComments = createAsyncThunk(
@@ -38,6 +40,7 @@ const myCommentsSlice = createSlice({
         [getMyComments.fulfilled.type]: (state, action) => {
             state.loading = false;
             state.comments = action.payload.comments;
+            state.commentsCount = action.payload.commentsCount;
             state.success = true;
         },
         [getMyComments.rejected.type]: (state, action) => {

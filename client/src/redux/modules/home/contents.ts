@@ -8,7 +8,7 @@ type Contents = {
     perPage: Number,
     clubContents: Array<Object>,
     groupContents: Array<Object>,
-    contentsCount: Number,
+    contentsCount: number,
 }
 
 const initialState: Contents = {
@@ -18,7 +18,7 @@ const initialState: Contents = {
     perPage: 10,
     clubContents: [],
     groupContents: [],
-    contentsCount: 0,
+    contentsCount: -1,
 }
 
 export const deleteContent = createAsyncThunk(

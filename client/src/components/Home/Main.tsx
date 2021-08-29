@@ -34,26 +34,22 @@ const Main: React.FC<RouteComponentProps> = (props) => {
     const PaperContainer = withPaperContainer('home', contentSubject);
     const auth = useAppSelector(state => state.auth.tokenMatch);
     const open = useAppSelector(state => state.createContentModal.isCreateModalOpen);
+    const perPage = useAppSelector(state => state.pagination.perPage);
 
     useEffect(() => {
-        dispatch(setContentSubject(ContentSubject.CLUB_CONTENT));
-        dispatch(getClubContents({ page: 1, perPage: 10 }));
-    }, [])
-
-    useEffect(() => {
-        console.log('contentSubject: ', contentSubject);
+        console.log('useeffect mount')
 
         switch (contentSubject) {
             case ContentSubject.CLUB_CONTENT:
-                dispatch(getClubContents({ page: 1, perPage: 10 }));
+                dispatch(getClubContents({ page: 1, perPage: perPage }));
                 break;
             case ContentSubject.GROUP_CONTENT:
-                dispatch(getGroupContents({ page: 1, perPage: 10 }));
+                dispatch(getGroupContents({ page: 1, perPage: perPage }));
                 break;
             default:
+                dispatch(getClubContents({ page: 1, perPage: perPage }));
                 break;
         }
-
     }, [contentSubject])
 
     const onCreateContent = () => {

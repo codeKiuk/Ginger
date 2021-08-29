@@ -10,6 +10,7 @@ import commentsReducer from '@redux/modules/content/comments'
 import myContentsReducer from '@redux/modules/myPage/myContents'
 import myCommentsReducer from '@redux/modules/myPage/myComments'
 import updateContentModalReducer from '@redux/modules/content/updateContentModal'
+import paginationReducer from '@redux/modules/commons/pagination'
 
 const rootReducer = combineReducers({
     login: loginReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     contentMenu: contentMenuReducer,
     createContentModal: createContentModalReducer,
     updateContentModal: updateContentModalReducer,
+    pagination: paginationReducer,
 })
 
 
