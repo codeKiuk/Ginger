@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { postLogout } from '@redux/modules/auth/logout';
-import { setContentMenuOpen } from '@redux/modules/commons/contentMenu'
+import { ContentSubject, setContentMenuOpen, setContentSubject } from '@redux/modules/commons/contentMenu'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -42,14 +42,14 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
     const isMyMenuOpen = Boolean(anchorEl);
 
     useEffect(() => {
-        console.log('logoutSuccess: ', logoutSuccess);
+        // console.log('logoutSuccess: ', logoutSuccess);
         if (logoutSuccess) {
             window.location.reload();
         }
     }, [logoutSuccess])
 
     useEffect(() => {
-        console.log('header auth: ', auth)
+        // console.log('header auth: ', auth)
     }, [auth])
 
     const onMyMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -62,6 +62,7 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
 
     const onMyPage = () => {
         onMyMenuClose();
+        dispatch(setContentSubject(ContentSubject.MY_CONTENT))
         props.history.push(`/my-page/${userID}`);
     }
 
@@ -73,13 +74,18 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
         dispatch(setContentMenuOpen(true));
     }
 
+    const onHomeClick = () => {
+        dispatch(setContentSubject(ContentSubject.CLUB_CONTENT))
+        props.history.push('/home');
+    }
+
     return (
         <div className={classes.root}>
             <AppBar>
                 <Toolbar>
                     <IconButton
                         edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-                        onClick={() => props.history.push('/home')}
+                        onClick={onHomeClick}
                     >
                         <HomeIcon />
                     </IconButton>

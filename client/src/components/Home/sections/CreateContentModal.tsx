@@ -62,10 +62,6 @@ export const CreateContentModal: React.FC<{}> = () => {
         group: false,
     })
 
-    useEffect(() => {
-        console.log('modal mounted');
-    }, [])
-
     const onCheckHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         // 하나만 체크할 수 있도록

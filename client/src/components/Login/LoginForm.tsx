@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import login, { postLogin } from '@redux/modules/auth/login'
 import { RouteComponentProps } from 'react-router';
 import Copyright from '../commons/Copyright';
+import { getIsUserIDduplicated } from '@redux/modules/auth/register';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -19,6 +20,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { SpeakerPhoneTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,17 +51,24 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    errorMessage: {
+        fontSize: '0.8rem',
+        padding: '10px',
+        margin: '0px',
+        color: 'red',
+    },
 }));
 
 type Login = {
-    userID: String;
-    password: String;
+    userID: string;
+    password: string;
 };
 
 const LoginForm: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const loginSuccess = useAppSelector(state => state.login.success);
+    const [passwordErr, setPasswordErr] = useState(Boolean);
     const loading = useAppSelector(state => state.login.loading);
     const { control, handleSubmit, formState: { errors } } = useForm<Login>();
 
@@ -72,14 +81,13 @@ const LoginForm: React.FC<RouteComponentProps> = (props) => {
         }
     }, [loginSuccess])
 
-    useEffect(() => {
-        // console.log('loginSuccess, loading', loginSuccess, " ", loading);
-    }, [loading])
-
     const onSubmit = handleSubmit(data => {
-        console.log('data: ', data);
         dispatch(postLogin(data))
-            .then((res) => console.log(res));
+            .then((res) => {
+                if (!res.payload.success) {
+                    setPasswordErr(true);
+                }
+            });
     });
 
     const onRegisterClick = () => {
@@ -107,45 +115,54 @@ const LoginForm: React.FC<RouteComponentProps> = (props) => {
                             name='userID'
                             control={control}
                             defaultValue=""
+                            rules={{
+                                required: true,
+                                pattern: /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i,
+                                validate: {
+                                    asyncValidate: async (value) => {
+                                        const res = await dispatch(getIsUserIDduplicated({ userID: value }));
+                                        return res.payload.isDuplicated === true;
+                                    }
+                                }
+                            }}
                             render={({ field }) =>
-                                <TextField
-                                    {...field}
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    autoFocus
-                                />
+                                <>
+                                    <TextField
+                                        {...field}
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        id="email"
+                                        autoFocus
+                                    />
+                                    {errors.userID?.type === 'required' && <p className={classes.errorMessage}>이메일을 입력해주세요.</p>}
+                                    {errors.userID?.type === 'pattern' && <p className={classes.errorMessage}>이메일 형식이 맞지 않습니다.</p>}
+                                    {errors.userID?.type === 'asyncValidate' && <p className={classes.errorMessage}>가입되어 있지 않은 이메일입니다.</p>}
+                                </>
                             }
                         />
                         <Controller
                             name='password'
                             control={control}
                             defaultValue=""
+                            rules={{
+                                required: true,
+                            }}
                             render={({ field }) =>
-                                <TextField
-                                    {...field}
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                />
+                                <>
+                                    <TextField
+                                        {...field}
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        id="password"
+                                        autoComplete="current-password"
+                                    />
+                                    {errors.password?.type === 'required' && <p className={classes.errorMessage}>비밀번호를 입력해주세요.</p>}
+                                    {passwordErr && <p className={classes.errorMessage}>비밀번호가 맞지 않습니다.</p>}
+                                </>
                             }
                         />
-
-                        {/* <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        /> */}
                         {
                             loading
                                 ?

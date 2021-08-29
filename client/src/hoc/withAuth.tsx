@@ -10,12 +10,10 @@ export const withAuth = (WrappedComponent: React.FC<RouteComponentProps>, auth: 
         const dispatch = useAppDispatch();
 
         useEffect(() => {
-            console.log('pagination withAuth')
             dispatch(compareToken())
                 .then((res) => {
                     if (res.payload) {
                         const tokenMatch = res.payload.tokenMatch;
-                        console.log('tokenMatch in withAuth: ', tokenMatch);
                         if (tokenMatch) {   // logged in
                             if (auth === 0) {
                                 props.history.push('/home');
@@ -26,11 +24,10 @@ export const withAuth = (WrappedComponent: React.FC<RouteComponentProps>, auth: 
                             }
                         }
                     } else {
-                        console.log('compareToken res', res);
+
                     }
                 }
                 )
-                .catch((err) => { console.log('compareToken err: ', err) })
         }, [])
 
 

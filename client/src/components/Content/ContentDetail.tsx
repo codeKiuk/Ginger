@@ -163,6 +163,7 @@ export const ContentDetail: React.FC<RouteComponentProps> = (props: RouteCompone
                                 <CardContent>
                                     <Typography variant="body1" component="p">
                                         {aboutThisContent?.content}
+                                        {!aboutThisContent?.content && '삭제된 글입니다.'}
                                     </Typography>
                                 </CardContent>
                                 {userID === aboutThisContent?.userID

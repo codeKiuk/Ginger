@@ -35,7 +35,7 @@ export const SideBar: React.FC<RouteComponentProps> = (props) => {
     const userID = useAppSelector(state => state.auth.userID);
 
     useEffect(() => {
-        console.log('props: ', props);
+        // console.log('props: ', props);
         // props.match. path === '/home' || '/my-page'
     }, [isContentsMenuOpen])
 

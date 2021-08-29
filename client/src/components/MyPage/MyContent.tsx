@@ -28,22 +28,19 @@ const MyContent: React.FC<RouteComponentProps> = (props) => {
     const contentSubject = useAppSelector(state => state.contentMenu.contentSubject);
     const userID = useAppSelector(state => state.auth.userID);
     const PaperContainer = withPaperContainer('my-page', contentSubject);
+    const perPage = useAppSelector(state => state.pagination.perPage);
 
     useEffect(() => {
-        dispatch(setContentSubject(ContentSubject.MY_CONTENT));
-        dispatch(getMyContents({ userID: userID, page: 1, perPage: 10 }));
 
-    }, [])
-
-    useEffect(() => {
         switch (contentSubject) {
             case ContentSubject.MY_CONTENT:
-                dispatch(getMyContents({ userID: userID, page: 1, perPage: 10 }))
+                dispatch(getMyContents({ userID: userID, page: 1, perPage: perPage }))
                 break;
             case ContentSubject.MY_COMMENT:
-                dispatch(getMyComments({ userID: userID, page: 1, perPage: 10 }));
+                dispatch(getMyComments({ userID: userID, page: 1, perPage: perPage }));
                 break;
             default:
+                dispatch(getMyContents({ userID: userID, page: 1, perPage: perPage }))
                 break;
         }
     }, [contentSubject])

@@ -30,7 +30,6 @@ const updateContentModalSlice = createSlice({
     initialState,
     reducers: {
         setUpdateContentModal: (state, action: PayloadAction<Boolean>) => {
-            console.log('action.payload: ', action.payload);
             state.isOpen = action.payload;
         }
     },
