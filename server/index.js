@@ -16,8 +16,7 @@ const myContentRoute = require('./routes/myPage/myContents');
 const myCommentRoute = require('./routes/myPage/myComments');
 
 const corsOption = {
-    // origin: [/\.example2\.com$/],
-    origin: ['http://localhost:3000'],
+    origin: ['http://ec2-3-34-135-185.ap-northeast-2.compute.amazonaws.com/'],
     optionsSuccessStatus: 200,
 }
 
