@@ -27,7 +27,7 @@ router.get('/api/club/contents', async function (req, res) {
     const skip = (req.query.page - 1) * req.query.perPage;
     const limit = Number(req.query.perPage);
 
-    const count = await Content.estimatedDocumentCount({ contentType: 0 })
+    const count = await Content.countDocuments({ contentType: 0 })
 
     Content
         .find({ contentType: 0 })
