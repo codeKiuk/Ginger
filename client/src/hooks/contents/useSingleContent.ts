@@ -4,7 +4,7 @@ import { getSingleContent } from '@redux/modules/comments/comments';
 import { deleteContent } from '@redux/modules/contents/contents';
 import { ContentSubject } from '@redux/modules/commons/contentMenu';
 import { RouteComponentProps } from 'react-router';
-import { setUpdateContentModal } from '@redux/modules/contents/updateContentModal';
+import { setUpdateContentModal } from '@redux/modules/modal/updateContentModal';
 import { updateContent } from '@redux/modules/contents/contents';
 
 export const useSingleContent = (contentID: string) => {

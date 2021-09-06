@@ -2,39 +2,25 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { getGroupContents, getClubContents } from '@redux/modules/contents/contents';
 import { RouteComponentProps } from 'react-router'
-import { Header } from '../commons/Header'
-import Copyright from '../commons/Copyright';
+import { Header } from '@commons/Header'
+import Copyright from '@commons/Copyright';
 import { SideBar } from '@components/commons/SideBar';
 import { withPaperContainer } from '@hoc/withPaperContainer';
-import { ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu';
-import { setIsCreateModalOpen } from '@redux/modules/contents/createContentModal';
+import { ContentSubject } from '@redux/modules/commons/contentMenu';
 import { CreateContentModal } from './sections/CreateContentModal';
+import { useContents } from '@hooks/contents/useContents';
 
 import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        main: {
-            display: 'flex', flexDirection: 'column',
-            justifyContent: 'space-between', alignItems: 'center',
-            overflow: 'auto',
-        },
-        btnGroup: {
-            display: 'flex', justifyContent: 'flex-end',
-            width: '70%', margin: '0px, 10px',
-        }
-    })
-)
 
 const Main: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const contentSubject = useAppSelector(state => state.contentMenu.contentSubject);
     const PaperContainer = withPaperContainer('home', contentSubject);
-    const auth = useAppSelector(state => state.auth.tokenMatch);
     const open = useAppSelector(state => state.createContentModal.isCreateModalOpen);
     const perPage = useAppSelector(state => state.pagination.perPage);
+    const { openCreateContentModal } = useContents();
 
     useEffect(() => {
 
@@ -51,14 +37,6 @@ const Main: React.FC<RouteComponentProps> = (props) => {
         }
     }, [contentSubject])
 
-    const onCreateContent = () => {
-        if (auth) {
-            dispatch(setIsCreateModalOpen(true));
-        } else {
-            props.history.push('/login');
-        }
-    }
-
     return (
         <main className={classes.main} >
             {open && <CreateContentModal />}
@@ -66,7 +44,7 @@ const Main: React.FC<RouteComponentProps> = (props) => {
             <PaperContainer {...props} />
             <div className={classes.btnGroup} >
                 <Button variant='outlined' color='primary'
-                    onClick={onCreateContent}
+                    onClick={() => openCreateContentModal(props)}
                 >
                     글 작성
                 </Button>
@@ -76,5 +54,19 @@ const Main: React.FC<RouteComponentProps> = (props) => {
         </main>
     )
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        main: {
+            display: 'flex', flexDirection: 'column',
+            justifyContent: 'space-between', alignItems: 'center',
+            overflow: 'auto',
+        },
+        btnGroup: {
+            display: 'flex', justifyContent: 'flex-end',
+            width: '70%', margin: '0px, 10px',
+        }
+    })
+)
 
 export default Main;

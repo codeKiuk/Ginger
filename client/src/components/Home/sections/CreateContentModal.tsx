@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { setIsCreateModalOpen } from '@redux/modules/contents/createContentModal';
-import { getGroupContents, getClubContents, postClubContent, postGroupContent } from '@redux/modules/contents/contents';
+import { useContents } from '@hooks/contents/useContents';
 
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField'
@@ -10,43 +8,11 @@ import Button from '@material-ui/core/Button'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        background: {
-            display: 'flex', justifyContent: 'center', alignItems: 'center',
-            zIndex: 20000, position: 'fixed',
-            width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.25)',
-        },
-        modal: {
-            display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-            width: '80vw', maxWidth: '700px', height: '700px', padding: '10px'
-        },
-        form: {
-            height: '100%',
-        },
-        checkBox: {
-            padding: '10px'
-        },
-        btnGroup: {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-end'
-        },
-        btn: {
-            margin: '0 5px'
-        },
-        errorMessage: {
-            fontSize: '0.8rem',
-            padding: '10px',
-            margin: '0px',
-            color: 'red',
-        }
-    }))
+import { ContentSubject } from '@redux/modules/commons/contentMenu';
 
 type CreateContent = {
-    checkClub: Boolean,
-    checkGroup: Boolean,
+    checkClub: boolean,
+    checkGroup: boolean,
     title: string,
     content: string,
     userID: string,
@@ -54,8 +20,7 @@ type CreateContent = {
 
 export const CreateContentModal: React.FC<{}> = () => {
     const classes = useStyles();
-    const dispatch = useAppDispatch();
-    const userID = useAppSelector(state => state.auth.userID);
+    const { onPostContent, closeCreateContentModal } = useContents();
     const { control, handleSubmit, formState: { errors } } = useForm<CreateContent>();
     const [checkState, setCheckState] = useState({
         club: false,
@@ -77,7 +42,6 @@ export const CreateContentModal: React.FC<{}> = () => {
         }
 
         setCheckState({ ...checkState, [event.currentTarget.name]: event.currentTarget.checked })
-        // console.log('checked: ', checkState.club);
     }
 
     const onSubmit = handleSubmit(data => {
@@ -85,19 +49,16 @@ export const CreateContentModal: React.FC<{}> = () => {
             return;
         }
 
-        dispatch(setIsCreateModalOpen(false));
-
-        if (checkState.club === true) {
-            dispatch(postClubContent({ ...data, userID: userID }));
-            dispatch(getClubContents({ page: 1, perPage: 10 }));
+        if (checkState.club) {
+            onPostContent({ ...data, subject: ContentSubject.CLUB_CONTENT });
         } else {
-            dispatch(postGroupContent({ ...data, userID: userID }));
-            dispatch(getGroupContents({ page: 1, perPage: 10 }));
+            onPostContent({ ...data, subject: ContentSubject.GROUP_CONTENT })
         }
+
     })
 
     const onCancel = () => {
-        dispatch(setIsCreateModalOpen(false));
+        closeCreateContentModal();
     }
 
     return (
@@ -109,8 +70,6 @@ export const CreateContentModal: React.FC<{}> = () => {
                         onSubmit={onSubmit}
                     >
                         <div className={classes.checkBox}>
-                            {/* <FormControlLabel control={<Checkbox checked={checkState.club} onChange={onCheckHandler} color='primary' name='club' />} label='동아리 / 학회' />
-                            <FormControlLabel control={<Checkbox checked={checkState.group} onChange={onCheckHandler} color='primary' name='group' />} label='스터디 / 소모임' /> */}
                         </div>
                         <Controller
                             name='checkClub'
@@ -195,3 +154,36 @@ export const CreateContentModal: React.FC<{}> = () => {
         </div>
     )
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        background: {
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            zIndex: 20000, position: 'fixed',
+            width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.25)',
+        },
+        modal: {
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+            width: '80vw', maxWidth: '700px', height: '700px', padding: '10px'
+        },
+        form: {
+            height: '100%',
+        },
+        checkBox: {
+            padding: '10px'
+        },
+        btnGroup: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-end'
+        },
+        btn: {
+            margin: '0 5px'
+        },
+        errorMessage: {
+            fontSize: '0.8rem',
+            padding: '10px',
+            margin: '0px',
+            color: 'red',
+        }
+    }))

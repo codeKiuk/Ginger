@@ -12,11 +12,11 @@ const createContentModalSlice = createSlice({
     name: 'createContent',
     initialState,
     reducers: {
-        setIsCreateModalOpen: (state, action: PayloadAction<boolean>) => {
+        setIsCreateContentModal: (state, action: PayloadAction<boolean>) => {
             state.isCreateModalOpen = action.payload;
         }
     },
 })
 
-export const { setIsCreateModalOpen } = createContentModalSlice.actions;
+export const { setIsCreateContentModal } = createContentModalSlice.actions;
 export default createContentModalSlice.reducer;
