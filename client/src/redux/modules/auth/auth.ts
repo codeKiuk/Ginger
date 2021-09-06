@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 type auth = {
-    loading: Boolean,
-    tokenMatch: Boolean,
+    loading: boolean,
+    tokenMatch: boolean,
     userID: string,
     admin: Number,
 }

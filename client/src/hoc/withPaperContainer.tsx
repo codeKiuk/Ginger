@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import React from 'react'
+import { useBoardLoading } from '@hooks/commons/useBoardLoading'
 import { ContentSubject, setContentMenuOpen } from '@redux/modules/commons/contentMenu'
 import { ContentPaper } from '../components/commons/ContentPaper'
 import { Loading } from '../components/commons/Loading'
@@ -19,7 +20,8 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
     const PaperContainer: React.FC<RouteComponentProps> = (props) => {
         const dispatch = useAppDispatch();
 
-        const loading = useAppSelector(state => state.contents.loading);
+        const loading = useBoardLoading();
+
         const clubContents = useAppSelector(state => state.contents.clubContents);
         const groupContents = useAppSelector(state => state.contents.groupContents);
         const contentsCount = useAppSelector(state => state.contents.contentsCount);
@@ -104,7 +106,7 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
                     {!loading && renderPapers()}
                 </div>
                 <br />
-                {!loading && <Pagination getPapers={getPapers} />}
+                {<Pagination getPapers={getPapers} />}
             </>
         )
     }

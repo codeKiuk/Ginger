@@ -2,8 +2,8 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 type Logout = {
-    loading: Boolean
-    success: Boolean,
+    loading: boolean
+    success: boolean,
 }
 
 const initialState: Logout = {

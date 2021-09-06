@@ -18,42 +18,17 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useAuthLoading } from '@hooks/commons/useAuthLoading';
 
 type Register = {
     userID: string,
     password: string,
 }
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%',
-        marginTop: theme.spacing(3),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-    errorMessage: {
-        fontSize: '0.8rem',
-        padding: '10px',
-        margin: '0px',
-        color: 'red',
-    },
-}));
-
 export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const loading = useAppSelector(state => state.register.loading);
+    const loading = useAuthLoading();
     const { control, handleSubmit, formState: { errors }, } = useForm<Register>();
 
 
@@ -172,3 +147,29 @@ export const RegisterForm: React.FC<RouteComponentProps> = (props) => {
 
     )
 }
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%',
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+    errorMessage: {
+        fontSize: '0.8rem',
+        padding: '10px',
+        margin: '0px',
+        color: 'red',
+    },
+}));

@@ -2,9 +2,9 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 type UpdateContentModal = {
-    loading: Boolean,
-    success: Boolean,
-    isOpen: Boolean
+    loading: boolean,
+    success: boolean,
+    isOpen: boolean
 }
 
 const initialState: UpdateContentModal = {
@@ -29,7 +29,7 @@ const updateContentModalSlice = createSlice({
     name: 'updateContentModal',
     initialState,
     reducers: {
-        setUpdateContentModal: (state, action: PayloadAction<Boolean>) => {
+        setUpdateContentModal: (state, action: PayloadAction<boolean>) => {
             state.isOpen = action.payload;
         }
     },

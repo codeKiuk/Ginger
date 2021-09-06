@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 type Login = {
-    success: Boolean,
-    loading: Boolean,
+    success: boolean,
+    loading: boolean,
 }
 
 const initialState: Login = {

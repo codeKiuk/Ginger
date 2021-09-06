@@ -2,8 +2,8 @@ import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 type MyContent = {
-    loading: Boolean,
-    success: Boolean
+    loading: boolean,
+    success: boolean
     contents: Array<Object>
     contentsCount: number,
 };
