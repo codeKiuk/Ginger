@@ -24,6 +24,7 @@ export const Pagination = ({ ...props }: Pagination) => {
     const dispatch = useAppDispatch();
 
     const userID = useAppSelector(state => state.auth.userID);
+    const [loading, setLoading] = useState(Boolean);
 
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(10);
@@ -64,10 +65,11 @@ export const Pagination = ({ ...props }: Pagination) => {
         }
     }
 
-    const onPageClick = (pageNum: number) => {
-
-        dispatch(getPapers({ userID: userID, page: pageNum, perPage: perPage }));
+    const onPageClick = async (pageNum: number) => {
+        setLoading(true);
         setPage(pageNum);
+        await dispatch(getPapers({ userID: userID, page: pageNum, perPage: perPage }));
+        setLoading(false);
     }
 
     const onBefore = () => {
@@ -109,7 +111,7 @@ export const Pagination = ({ ...props }: Pagination) => {
     return (
         <div className={classes.container}>
             <NavigateBeforeIcon onClick={onBefore} />
-            {renderPageList()}
+            {!loading && renderPageList()}
             <NavigateNextIcon onClick={onNext} />
         </div>
     )

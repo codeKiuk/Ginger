@@ -19,7 +19,11 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
     const PaperContainer: React.FC<RouteComponentProps> = (props) => {
         const dispatch = useAppDispatch();
 
-        const loading = useAppSelector(state => state.contents.loading);
+        const contentsLoading = useAppSelector(state => state.contents.loading)
+        const myCommentsLoading = useAppSelector(state => state.myComments.loading)
+        const myContentsLoading = useAppSelector(state => state.myContents.loading);
+        const loading = contentsLoading || myCommentsLoading || myContentsLoading;
+
         const clubContents = useAppSelector(state => state.contents.clubContents);
         const groupContents = useAppSelector(state => state.contents.groupContents);
         const contentsCount = useAppSelector(state => state.contents.contentsCount);
@@ -104,7 +108,7 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
                     {!loading && renderPapers()}
                 </div>
                 <br />
-                {!loading && <Pagination getPapers={getPapers} />}
+                {<Pagination getPapers={getPapers} />}
             </>
         )
     }
