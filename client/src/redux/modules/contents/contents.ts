@@ -33,6 +33,18 @@ export const deleteContent = createAsyncThunk(
     }
 )
 
+export const updateContent = createAsyncThunk(
+    'updateContentModal/updateContent',
+    async ({ contentID, title, content }: { contentID: string, title: string, content: string }, ThunkAPI) => {
+        try {
+            const res = await axios.put('/api/contents', { contentID: contentID, title: title, content: content });
+            return res.data
+        } catch (err) {
+            return ThunkAPI.rejectWithValue(err);
+        }
+    }
+)
+
 /**
  *              Group Contents
  */
@@ -159,6 +171,18 @@ const contentsSlice = createSlice({
             state.success = true;
         },
         [deleteContent.rejected.type]: (state, action) => {
+            state.loading = false;
+            state.success = false;
+        },
+        // Update Content
+        [updateContent.pending.type]: (state, action) => {
+            state.loading = true;
+        },
+        [updateContent.fulfilled.type]: (state, action) => {
+            state.loading = false;
+            state.success = true;
+        },
+        [updateContent.rejected.type]: (state, action) => {
             state.loading = false;
             state.success = false;
         },

@@ -8,7 +8,7 @@ import { Loading } from '@components/commons/Loading';
 import { CreateComment } from './sections/CreateComment';
 import { UpdateContentModal } from './sections/UpdateContentModal';
 import { useBoardLoading } from '@hooks/loading/useBoardLoading';
-import { useSingleContent } from '@hooks/contentDetail/useSingleContent';
+import { useSingleContent } from '@hooks/contents/useSingleContent';
 import { Comments } from './sections/Comments';
 
 import Button from '@material-ui/core/Button';

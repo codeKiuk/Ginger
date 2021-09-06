@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { getSingleContent } from '@redux/modules/content/comments';
-import { deleteContent } from '@redux/modules/home/contents';
+import { getSingleContent } from '@redux/modules/comments/comments';
+import { deleteContent } from '@redux/modules/contents/contents';
 import { ContentSubject } from '@redux/modules/commons/contentMenu';
 import { RouteComponentProps } from 'react-router';
-import { setUpdateContentModal, updateContent } from '@redux/modules/content/updateContentModal';
+import { setUpdateContentModal } from '@redux/modules/contents/updateContentModal';
+import { updateContent } from '@redux/modules/contents/contents';
 
 export const useSingleContent = (contentID: string) => {
     const dispatch = useAppDispatch();

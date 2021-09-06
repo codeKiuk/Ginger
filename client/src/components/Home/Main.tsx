@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { getGroupContents, getClubContents } from '@redux/modules/home/contents';
+import { getGroupContents, getClubContents } from '@redux/modules/contents/contents';
 import { RouteComponentProps } from 'react-router'
 import { Header } from '../commons/Header'
 import Copyright from '../commons/Copyright';
 import { SideBar } from '@components/commons/SideBar';
 import { withPaperContainer } from '@hoc/withPaperContainer';
 import { ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu';
-import { setIsCreateModalOpen } from '@redux/modules/home/createContentModal';
+import { setIsCreateModalOpen } from '@redux/modules/contents/createContentModal';
 import { CreateContentModal } from './sections/CreateContentModal';
 
 import Button from '@material-ui/core/Button';

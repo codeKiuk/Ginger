@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm, Controller } from "react-hook-form";
-import { useSingleContent } from '@hooks/contentDetail/useSingleContent';
+import { useSingleContent } from '@hooks/contents/useSingleContent';
 
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField'

@@ -7,8 +7,8 @@ import { RouteComponentProps } from 'react-router'
 import { withPaperContainer } from '@hoc/withPaperContainer'
 import { ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu';
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { getMyComments } from '@redux/modules/myPage/myComments'
-import { getMyContents } from '@redux/modules/myPage/myContents'
+import { getMyComments } from '@redux/modules/comments/myComments'
+import { getMyContents } from '@redux/modules/contents/myContents'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
