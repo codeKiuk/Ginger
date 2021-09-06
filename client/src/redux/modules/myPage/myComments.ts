@@ -2,8 +2,8 @@ import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 type MyComment = {
-    loading: Boolean,
-    success: Boolean
+    loading: boolean,
+    success: boolean
     comments: Array<Object>,
     commentsCount: number,
 };

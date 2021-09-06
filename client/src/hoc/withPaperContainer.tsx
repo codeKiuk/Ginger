@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import React from 'react'
+import { useBoardLoading } from '@hooks/useBoardLoading'
 import { ContentSubject, setContentMenuOpen } from '@redux/modules/commons/contentMenu'
 import { ContentPaper } from '../components/commons/ContentPaper'
 import { Loading } from '../components/commons/Loading'
@@ -19,10 +20,7 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
     const PaperContainer: React.FC<RouteComponentProps> = (props) => {
         const dispatch = useAppDispatch();
 
-        const contentsLoading = useAppSelector(state => state.contents.loading)
-        const myCommentsLoading = useAppSelector(state => state.myComments.loading)
-        const myContentsLoading = useAppSelector(state => state.myContents.loading);
-        const loading = contentsLoading || myCommentsLoading || myContentsLoading;
+        const loading = useBoardLoading();
 
         const clubContents = useAppSelector(state => state.contents.clubContents);
         const groupContents = useAppSelector(state => state.contents.groupContents);

@@ -2,9 +2,9 @@ import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 type Register = {
-    loading: Boolean,
-    success: Boolean,
-    isUserIDduplicated: Boolean,
+    loading: boolean,
+    success: boolean,
+    isUserIDduplicated: boolean,
 }
 
 const initialState: Register = {
