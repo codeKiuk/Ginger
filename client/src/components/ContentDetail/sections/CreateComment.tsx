@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useForm, Controller } from "react-hook-form";
-import { useComments } from '@hooks/contentDetail/useComments';
+import { useComments } from '@hooks/comments/useComments';
 
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'

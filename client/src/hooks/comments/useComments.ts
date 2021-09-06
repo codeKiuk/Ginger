@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { getComments } from '@redux/modules/content/comments';
-import { deleteComment, postComment } from '@redux/modules/content/comments';
+import { getComments } from '@redux/modules/comments/comments';
+import { deleteComment, postComment } from '@redux/modules/comments/comments';
 import { RouteComponentProps } from 'react-router';
 
 export const useComments = (contentID: string) => {
@@ -31,7 +31,6 @@ export const useComments = (contentID: string) => {
             contentID: contentID,
         }))
             .then(res => {
-                // console.log('postComments res', res);
                 if (res.payload.success) {
                     dispatch(getComments({ contentID: contentID }))
                 }

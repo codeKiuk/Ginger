@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import React from 'react'
 import { useBoardLoading } from '@hooks/loading/useBoardLoading'
-import { ContentSubject, setContentMenuOpen } from '@redux/modules/commons/contentMenu'
+import { ContentSubject } from '@redux/modules/commons/contentMenu'
 import { ContentPaper } from '../components/commons/ContentPaper'
 import { Loading } from '../components/commons/Loading'
 import { CommentPaper } from '@components/commons/CommentPaper'
@@ -11,9 +11,9 @@ import { setTotalDocs } from '@redux/modules/commons/pagination'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import { RouteComponentProps } from 'react-router'
-import { getClubContents, getGroupContents } from '@redux/modules/home/contents'
-import { getMyComments } from '@redux/modules/myPage/myComments'
-import { getMyContents } from '@redux/modules/myPage/myContents'
+import { getClubContents, getGroupContents } from '@redux/modules/contents/contents'
+import { getMyComments } from '@redux/modules/comments/myComments'
+import { getMyContents } from '@redux/modules/contents/myContents'
 
 export const withPaperContainer = (route: string, contentSubject: ContentSubject): React.FC<RouteComponentProps> => {
 

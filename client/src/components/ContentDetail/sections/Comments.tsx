@@ -1,5 +1,5 @@
 import React from 'react'
-import { useComments } from '@hooks/contentDetail/useComments'
+import { useComments } from '@hooks/comments/useComments'
 
 import ListItem from '@material-ui/core/ListItem'
 import Card from '@material-ui/core/Card'

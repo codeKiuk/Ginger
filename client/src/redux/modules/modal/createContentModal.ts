@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type CreateContentModal = {
     isCreateModalOpen: boolean,
@@ -13,11 +12,11 @@ const createContentModalSlice = createSlice({
     name: 'createContent',
     initialState,
     reducers: {
-        setIsCreateModalOpen: (state, action: PayloadAction<boolean>) => {
+        setIsCreateContentModal: (state, action: PayloadAction<boolean>) => {
             state.isCreateModalOpen = action.payload;
         }
     },
 })
 
-export const { setIsCreateModalOpen } = createContentModalSlice.actions;
+export const { setIsCreateContentModal } = createContentModalSlice.actions;
 export default createContentModalSlice.reducer;
