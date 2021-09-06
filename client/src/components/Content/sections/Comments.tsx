@@ -18,7 +18,7 @@ export const Comments: React.FC<Comment> = (props) => {
     const classes = useStyles();
     const userID = useAppSelector(state => state.auth.userID);
     const contentID = props.contentID;
-    const { comments, commentDelete } = useComments(contentID);
+    const { comments, onDeleteComment } = useComments(contentID);
 
     return (
         <>
@@ -38,7 +38,7 @@ export const Comments: React.FC<Comment> = (props) => {
                             comment.userID === userID
                             &&
                             <CardActions>
-                                <Button onClick={() => commentDelete(comment._id)} color="secondary">삭제</Button>
+                                <Button onClick={() => onDeleteComment(comment._id)} color="secondary">삭제</Button>
                             </CardActions>
                         }
                     </Card>

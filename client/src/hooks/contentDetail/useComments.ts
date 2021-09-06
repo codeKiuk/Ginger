@@ -14,12 +14,12 @@ export const useComments = (contentID: string) => {
         dispatch(getComments({ contentID: contentID }));
     }, [])
 
-    const commentDelete = async (commentID: string) => {
+    const onDeleteComment = async (commentID: string) => {
         await dispatch(deleteComment({ commentID: commentID }));
-        dispatch(getComments({ contentID: contentID ? contentID : '' }));
+        dispatch(getComments({ contentID: contentID }));
     }
 
-    const commentCreate = async (data: { comment: string }, props: RouteComponentProps) => {
+    const onPostComment = async (data: { comment: string }, props: RouteComponentProps) => {
         if (!auth) {
             props.history.push('/login')
             return;
@@ -28,15 +28,15 @@ export const useComments = (contentID: string) => {
         dispatch(postComment({
             userID: userID,
             comment: data.comment,
-            contentID: contentID ? contentID : '',
+            contentID: contentID,
         }))
             .then(res => {
                 // console.log('postComments res', res);
                 if (res.payload.success) {
-                    dispatch(getComments({ contentID: contentID ? contentID : '' }))
+                    dispatch(getComments({ contentID: contentID }))
                 }
             })
     }
 
-    return { comments, commentDelete, commentCreate };
+    return { comments, onDeleteComment, onPostComment };
 }

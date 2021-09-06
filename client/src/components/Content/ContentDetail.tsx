@@ -32,7 +32,7 @@ export const ContentDetail = ({ ...props }: RouteComponentProps<MatchParams>) =>
     const loading = useBoardLoading();
 
     const contentID = props.match.params.contentID;
-    const { singleContent, contentDelete, openUpdateContentModal } = useSingleContent(contentID ? contentID : '');
+    const { singleContent, onDeleteContent, openUpdateContentModal } = useSingleContent(contentID ? contentID : '');
     const userID = useAppSelector(state => state.auth.userID);
 
     return (
@@ -72,7 +72,7 @@ export const ContentDetail = ({ ...props }: RouteComponentProps<MatchParams>) =>
                                     &&
                                     <CardActions>
                                         <Button variant="outlined" color="primary" onClick={openUpdateContentModal}>수정</Button>
-                                        <Button variant="outlined" color="secondary" onClick={() => contentDelete(props)}>삭제</Button>
+                                        <Button variant="outlined" color="secondary" onClick={() => onDeleteContent(props)}>삭제</Button>
                                     </CardActions>
                                 }
                             </Card>

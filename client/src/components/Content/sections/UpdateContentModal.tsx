@@ -16,11 +16,11 @@ export const UpdateContentModal: React.FC<any> = (props) => {
     const classes = useStyles();
 
     const contentID = props.contentID
-    const { contentUpdate, singleContent, closeUpdateContentModal } = useSingleContent(contentID);
+    const { onUpdateContent, singleContent, closeUpdateContentModal } = useSingleContent(contentID);
     const { control, handleSubmit, formState: { errors } } = useForm<UpdateContent>();
 
     const onSubmit = handleSubmit(data => {
-        contentUpdate(data);
+        onUpdateContent(data);
     })
 
     const onCancel = () => {

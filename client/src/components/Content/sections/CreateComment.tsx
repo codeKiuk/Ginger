@@ -15,7 +15,7 @@ export const CreateComment: React.FC<any> = (props) => {
     const { control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<CreateComment>();
 
     const contentID = props.contentID;
-    const { commentCreate } = useComments(contentID);
+    const { onPostComment } = useComments(contentID);
 
     useEffect(() => {
         if (isSubmitSuccessful) {
@@ -24,7 +24,7 @@ export const CreateComment: React.FC<any> = (props) => {
     }, [isSubmitSuccessful, reset]);
 
     const onCreateComment = handleSubmit(data => {
-        commentCreate(data, props);
+        onPostComment(data, props);
     })
 
     return (

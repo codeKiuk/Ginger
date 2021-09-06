@@ -17,7 +17,7 @@ export const useSingleContent = (contentID: string) => {
         dispatch(getSingleContent({ contentID: contentID }));
     }, [])
 
-    const contentDelete = async (props: RouteComponentProps) => {
+    const onDeleteContent = async (props: RouteComponentProps) => {
         await dispatch(deleteContent({ contentID: contentID ? contentID : '' }))
         if (contentSubject === ContentSubject.MY_CONTENT || contentSubject === ContentSubject.MY_COMMENT) {
             props.history.push(`/my-page/${userID}`)
@@ -26,7 +26,7 @@ export const useSingleContent = (contentID: string) => {
         }
     }
 
-    const contentUpdate = async (data: { title: string, content: string }) => {
+    const onUpdateContent = async (data: { title: string, content: string }) => {
         await dispatch(updateContent({ ...data, contentID: contentID }))
         dispatch(setUpdateContentModal(false));
         dispatch(getSingleContent({ contentID: contentID ? contentID : '' }));
@@ -40,5 +40,5 @@ export const useSingleContent = (contentID: string) => {
         dispatch(setUpdateContentModal(false));
     }
 
-    return { singleContent, contentDelete, contentUpdate, openUpdateContentModal, closeUpdateContentModal };
+    return { singleContent, onDeleteContent, onUpdateContent, openUpdateContentModal, closeUpdateContentModal };
 }
