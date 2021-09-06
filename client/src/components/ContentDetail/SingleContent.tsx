@@ -24,7 +24,7 @@ type MatchParams = {
     contentID?: string,
 }
 
-export const ContentDetail = ({ ...props }: RouteComponentProps<MatchParams>) => {
+export const SingleContent = ({ ...props }: RouteComponentProps<MatchParams>) => {
     const classes = useStyles();
 
     const isUpdateModalOpen = useAppSelector(state => state.updateContentModal.isOpen);
