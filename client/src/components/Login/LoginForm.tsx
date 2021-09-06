@@ -5,7 +5,7 @@ import login, { postLogin } from '@redux/modules/auth/login'
 import { RouteComponentProps } from 'react-router';
 import Copyright from '../commons/Copyright';
 import { getIsUserIDduplicated } from '@redux/modules/auth/register';
-import { useAuthLoading } from '@hooks/useAuthLoading';
+import { useAuthLoading } from '@hooks/commons/useAuthLoading';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
