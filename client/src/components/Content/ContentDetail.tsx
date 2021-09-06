@@ -7,7 +7,7 @@ import Copyright from '@components/commons/Copyright'
 import { Loading } from '@components/commons/Loading';
 import { CreateComment } from './sections/CreateComment';
 import { UpdateContentModal } from './sections/UpdateContentModal';
-import { useBoardLoading } from '@hooks/commons/useBoardLoading';
+import { useBoardLoading } from '@hooks/loading/useBoardLoading';
 import { useSingleContent } from '@hooks/contentDetail/useSingleContent';
 import { Comments } from './sections/Comments';
 
