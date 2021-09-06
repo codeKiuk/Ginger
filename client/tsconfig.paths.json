@@ -6,7 +6,7 @@
                 "components/*"
             ],
             "@commons/*": [
-                "commons/*"
+                "components/commons/*"
             ],
             "@pages/*": [
                 "pages/*"
@@ -22,6 +22,9 @@
             ],
             "@dispatch": [
                 "redux/hooks"
+            ],
+            "@hooks/*": [
+                "hooks/*"
             ],
         },
     }
