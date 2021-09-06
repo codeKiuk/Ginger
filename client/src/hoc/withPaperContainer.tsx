@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import React from 'react'
-import { useBoardLoading } from '@hooks/commons/useBoardLoading'
+import { useBoardLoading } from '@hooks/loading/useBoardLoading'
 import { ContentSubject, setContentMenuOpen } from '@redux/modules/commons/contentMenu'
 import { ContentPaper } from '../components/commons/ContentPaper'
 import { Loading } from '../components/commons/Loading'

@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { useAppSelector } from '@redux/hooks';
 
 export const useBoardLoading = (): boolean => {
 
