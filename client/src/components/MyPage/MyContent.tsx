@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import { Header } from '@components/commons/Header'
-import { SideBar } from '@components/commons/SideBar'
 import Copyright from '@components/commons/Copyright'
 import { RouteComponentProps } from 'react-router'
 import { withPaperContainer } from '@hoc/withPaperContainer'
@@ -9,6 +7,8 @@ import { useFetchPage } from '@hooks/pagination/useFetchPage'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
+const Header = React.lazy(() => import('@commons/Header'));
+const SideBar = React.lazy(() => import('@components/commons/SideBar'))
 
 const MyContent: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();

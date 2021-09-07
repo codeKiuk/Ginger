@@ -36,7 +36,7 @@ export const Pagination = () => {
     return (
         <div className={classes.container}>
             <NavigateBeforeIcon onClick={onBefore} />
-            {!loading && renderPageList()}
+            {renderPageList()}
             <NavigateNextIcon onClick={onNext} />
         </div>
     )

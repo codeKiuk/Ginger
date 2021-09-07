@@ -12,7 +12,7 @@ type UpdateContent = {
     content: string,
 }
 
-export const UpdateContentModal: React.FC<any> = (props) => {
+const UpdateContentModal: React.FC<any> = (props) => {
     const classes = useStyles();
 
     const contentID = props.contentID
@@ -124,3 +124,5 @@ const useStyles = makeStyles((theme: Theme) =>
             color: 'red',
         }
     }))
+
+export default UpdateContentModal

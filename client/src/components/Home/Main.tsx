@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { useAppSelector } from '@redux/hooks';
 import { RouteComponentProps } from 'react-router'
-import { Header } from '@commons/Header'
 import Copyright from '@commons/Copyright';
-import { SideBar } from '@components/commons/SideBar';
 import { withPaperContainer } from '@hoc/withPaperContainer';
-import { CreateContentModal } from './sections/CreateContentModal';
 import { useContents } from '@hooks/contents/useContents';
 import { useFetchPage } from '@hooks/pagination/useFetchPage';
 
 import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
+const Header = React.lazy(() => import('@commons/Header'));
+const SideBar = React.lazy(() => import('@components/commons/SideBar'))
+const CreateContentModal = React.lazy(() => import('./sections/CreateContentModal'))
 
 const Main: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();

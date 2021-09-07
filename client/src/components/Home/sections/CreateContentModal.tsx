@@ -18,7 +18,7 @@ type CreateContent = {
     userID: string,
 }
 
-export const CreateContentModal: React.FC<{}> = () => {
+const CreateContentModal: React.FC<{}> = () => {
     const classes = useStyles();
     const { onPostContent, closeCreateContentModal } = useContents();
     const { control, handleSubmit, formState: { errors } } = useForm<CreateContent>();
@@ -187,3 +187,5 @@ const useStyles = makeStyles((theme: Theme) =>
             color: 'red',
         }
     }))
+
+export default CreateContentModal

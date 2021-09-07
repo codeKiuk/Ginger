@@ -1,24 +1,25 @@
 import React from 'react'
 import { useAppSelector } from '@redux/hooks'
-import { Header } from '@components/commons/Header'
 import { RouteComponentProps } from 'react-router'
-import { SideBar } from '@components/commons/SideBar'
 import Copyright from '@components/commons/Copyright'
-import { Loading } from '@components/commons/Loading';
-import { CreateComment } from './sections/CreateComment';
-import { UpdateContentModal } from './sections/UpdateContentModal';
-import { useBoardLoading } from '@hooks/loading/useBoardLoading';
-import { useSingleContent } from '@hooks/contents/useSingleContent';
-import { Comments } from './sections/Comments';
+import { Loading } from '@components/commons/Loading'
+import { CreateComment } from './sections/CreateComment'
+import { useBoardLoading } from '@hooks/loading/useBoardLoading'
+import { useSingleContent } from '@hooks/contents/useSingleContent'
+import { Comments } from './sections/Comments'
 
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import Typography from '@material-ui/core/Typography'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+
+const Header = React.lazy(() => import('@commons/Header'))
+const SideBar = React.lazy(() => import('@components/commons/SideBar'))
+const UpdateContentModal = React.lazy(() => import('./sections/UpdateContentModal'))
 
 type MatchParams = {
     contentID?: string,
