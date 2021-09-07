@@ -5,14 +5,19 @@ import { useComments } from '@hooks/comments/useComments';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { RouteComponentProps } from 'react-router';
 
-type CreateComment = {
+type CreateCommentForm = RouteComponentProps & {
     comment: string,
 }
 
-export const CreateComment: React.FC<any> = (props) => {
+type CreateComment = RouteComponentProps & {
+    contentID: string,
+}
+
+export const CreateComment: React.FC<any> = ({ ...props }: CreateComment) => {
     const classes = useStyles();
-    const { control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<CreateComment>();
+    const { control, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<CreateCommentForm>();
 
     const contentID = props.contentID;
     const { onPostComment } = useComments(contentID);

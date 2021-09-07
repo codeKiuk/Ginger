@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@redux/hooks'
+import React from 'react'
 
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -21,8 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const CommentPaper: React.FC<any> = (props) => {
 
     const classes = useStyles();
-    const dispatch = useAppDispatch();
-    const auth = useAppSelector(state => state.auth.userID);
     const aboutThisComment = {
         userID: props.userID,
         comment: props.comment,

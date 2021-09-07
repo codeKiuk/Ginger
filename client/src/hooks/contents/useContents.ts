@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { useBoardType } from './useBoardType'
 import { setIsCreateContentModal } from '@redux/modules/modal/createContentModal';
 import { RouteComponentProps } from 'react-router';
 import { postClubContent, getClubContents, postGroupContent, getGroupContents } from '@redux/modules/contents/contents';
@@ -9,7 +8,6 @@ import { ContentSubject } from '@redux/modules/commons/contentMenu';
 
 export const useContents = () => {
     const dispatch = useAppDispatch();
-    const { contentSubject, switchMenu } = useBoardType();
     const userID = useAppSelector(state => state.auth.userID);
     const auth = useAppSelector(state => state.auth.tokenMatch);
 

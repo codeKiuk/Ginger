@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useForm, Controller } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { useAppDispatch } from '@redux/hooks';
 import { RouteComponentProps } from 'react-router';
 import { getIsUserIDduplicated, postRegister } from '@redux/modules/auth/register';
 import { postLogin } from '@redux/modules/auth/login';

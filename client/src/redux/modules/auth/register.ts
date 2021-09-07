@@ -1,4 +1,4 @@
-import { createAsyncThunk, PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 type Register = {
