@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { postLogout } from '@redux/modules/auth/logout';
@@ -9,30 +9,17 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
-import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        title: {
-            flexGrow: 1,
-        },
-    }),
-);
+const Menu = React.lazy(() => import('@material-ui/core/Menu'));
+const MenuItem = React.lazy(() => import('@material-ui/core/MenuItem'))
+const InsertEmoticonIcon = React.lazy(() => import('@material-ui/icons/InsertEmoticon'));
+const ExitToAppIcon = React.lazy(() => import('@material-ui/icons/ExitToApp'));
+const Button = React.lazy(() => import('@material-ui/core/Button'));
 
-export const Header: React.FC<RouteComponentProps> = (props) => {
+const Header: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const auth = useAppSelector(state => state.auth.tokenMatch);
@@ -42,14 +29,12 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
     const isMyMenuOpen = Boolean(anchorEl);
 
     useEffect(() => {
-        // console.log('logoutSuccess: ', logoutSuccess);
         if (logoutSuccess) {
             window.location.reload();
         }
     }, [logoutSuccess])
 
     useEffect(() => {
-        // console.log('header auth: ', auth)
     }, [auth])
 
     const onMyMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -112,49 +97,66 @@ export const Header: React.FC<RouteComponentProps> = (props) => {
                                 >
                                     <AccountCircle />
                                 </IconButton>
-
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={isMyMenuOpen}
-                                    onClose={onMyMenuClose}
-                                >
-                                    <MenuItem onClick={onMyPage}>
-                                        <IconButton
-                                            edge="start" className={classes.menuButton} color="inherit"
-                                        >
-                                            <InsertEmoticonIcon />
-                                        </IconButton>
-                                        My Page:<p style={{ marginLeft: '2px' }}>{userID}</p>
-                                    </MenuItem>
-                                    <MenuItem onClick={onLogOut}>
-                                        <IconButton
-                                            edge="start" className={classes.menuButton} color="inherit"
-                                        >
-                                            <ExitToAppIcon />
-                                        </IconButton>
-                                        로그아웃
-                                    </MenuItem>
-                                </Menu>
+                                <Suspense fallback={<div />}>
+                                    <Menu
+                                        id="menu-appbar"
+                                        anchorEl={anchorEl}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        keepMounted
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        open={isMyMenuOpen}
+                                        onClose={onMyMenuClose}
+                                    >
+                                        <MenuItem onClick={onMyPage}>
+                                            <IconButton
+                                                edge="start" className={classes.menuButton} color="inherit"
+                                            >
+                                                <InsertEmoticonIcon />
+                                            </IconButton>
+                                            My Page:<p style={{ marginLeft: '2px' }}>{userID}</p>
+                                        </MenuItem>
+                                        <MenuItem onClick={onLogOut}>
+                                            <IconButton
+                                                edge="start" className={classes.menuButton} color="inherit"
+                                            >
+                                                <ExitToAppIcon />
+                                            </IconButton>
+                                            로그아웃
+                                        </MenuItem>
+                                    </Menu>
+                                </Suspense>
                             </>
                             :
-                            <>
+                            <Suspense fallback={<div />}>
                                 <Button variant="contained" onClick={() => props.history.push('/login')}>
                                     Login
                                 </Button>
-                            </>
+                            </Suspense>
                     }
                 </Toolbar>
             </AppBar>
         </div >
     )
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            flexGrow: 1,
+        },
+        menuButton: {
+            marginRight: theme.spacing(2),
+        },
+        title: {
+            flexGrow: 1,
+        },
+    }),
+);
+
+export default Header

@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 import TocIcon from '@material-ui/icons/Toc';
 
-export const SideBar: React.FC<RouteComponentProps> = (props) => {
+const SideBar: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const isContentsMenuOpen = Boolean(useAppSelector(state => state.contentMenu.isOpen));
@@ -88,3 +88,5 @@ const useStyles = makeStyles({
         width: 'auto',
     },
 });
+
+export default SideBar
