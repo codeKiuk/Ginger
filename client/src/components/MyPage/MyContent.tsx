@@ -1,48 +1,24 @@
 import React, { useEffect } from 'react'
-
-import { Header } from '../../components/commons/Header'
+import { Header } from '@components/commons/Header'
 import { SideBar } from '@components/commons/SideBar'
 import Copyright from '@components/commons/Copyright'
 import { RouteComponentProps } from 'react-router'
 import { withPaperContainer } from '@hoc/withPaperContainer'
-import { ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu';
-import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { getMyComments } from '@redux/modules/comments/myComments'
-import { getMyContents } from '@redux/modules/contents/myContents'
+import { useAppSelector } from '@redux/hooks'
+import { useFetchPage } from '@hooks/pagination/useFetchPage'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        main: {
-            display: 'flex', flexDirection: 'column',
-            justifyContent: 'space-between', alignItems: 'center',
-            overflow: 'auto',
-        },
-    })
-)
 
 const MyContent: React.FC<RouteComponentProps> = (props) => {
     const classes = useStyles();
-    const dispatch = useAppDispatch();
+
     const contentSubject = useAppSelector(state => state.contentMenu.contentSubject);
-    const userID = useAppSelector(state => state.auth.userID);
     const PaperContainer = withPaperContainer('my-page', contentSubject);
-    const perPage = useAppSelector(state => state.pagination.perPage);
+    const { getPapers } = useFetchPage();
 
     useEffect(() => {
-
-        switch (contentSubject) {
-            case ContentSubject.MY_CONTENT:
-                dispatch(getMyContents({ userID: userID, page: 1, perPage: perPage }))
-                break;
-            case ContentSubject.MY_COMMENT:
-                dispatch(getMyComments({ userID: userID, page: 1, perPage: perPage }));
-                break;
-            default:
-                dispatch(getMyContents({ userID: userID, page: 1, perPage: perPage }))
-                break;
-        }
+        getPapers(1);
     }, [contentSubject])
 
     return (
@@ -54,5 +30,16 @@ const MyContent: React.FC<RouteComponentProps> = (props) => {
         </main>
     )
 }
+
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        main: {
+            display: 'flex', flexDirection: 'column',
+            justifyContent: 'space-between', alignItems: 'center',
+            overflow: 'auto',
+        },
+    })
+)
 
 export default MyContent

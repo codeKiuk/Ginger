@@ -2,8 +2,8 @@ import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import React from 'react'
 import { useBoardLoading } from '@hooks/loading/useBoardLoading'
 import { ContentSubject } from '@redux/modules/commons/contentMenu'
-import { ContentPaper } from '../components/commons/ContentPaper'
-import { Loading } from '../components/commons/Loading'
+import { ContentPaper } from '@components/commons/ContentPaper'
+import { Loading } from '@components/commons/Loading'
 import { CommentPaper } from '@components/commons/CommentPaper'
 import { Pagination } from '@components/commons/Pagination'
 import { setTotalDocs } from '@redux/modules/commons/pagination'
@@ -11,9 +11,6 @@ import { setTotalDocs } from '@redux/modules/commons/pagination'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import { RouteComponentProps } from 'react-router'
-import { getClubContents, getGroupContents } from '@redux/modules/contents/contents'
-import { getMyComments } from '@redux/modules/comments/myComments'
-import { getMyContents } from '@redux/modules/contents/myContents'
 
 export const withPaperContainer = (route: string, contentSubject: ContentSubject): React.FC<RouteComponentProps> => {
 
@@ -29,8 +26,6 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
         const myContentsCount = useAppSelector(state => state.myContents.contentsCount);
         const myComments = useAppSelector(state => state.myComments.comments);
         const myCommentsCount = useAppSelector(state => state.myComments.commentsCount);
-
-        let getPapers = Function();
 
         const renderContents = (contents: Array<Object>) => {
 
@@ -72,22 +67,18 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
 
                 case ContentSubject.CLUB_CONTENT:
                     dispatch(setTotalDocs(contentsCount));
-                    getPapers = getClubContents;
                     return renderContents(clubContents);
 
                 case ContentSubject.GROUP_CONTENT:
                     dispatch(setTotalDocs(contentsCount));
-                    getPapers = getGroupContents;
                     return renderContents(groupContents);
 
                 case ContentSubject.MY_CONTENT:
                     dispatch(setTotalDocs(myContentsCount));
-                    getPapers = getMyContents;
                     return renderContents(myContents);
 
                 case ContentSubject.MY_COMMENT:
                     dispatch(setTotalDocs(myCommentsCount));
-                    getPapers = getMyComments;
                     return renderMyComments(myComments);
 
                 default:
@@ -106,7 +97,7 @@ export const withPaperContainer = (route: string, contentSubject: ContentSubject
                     {!loading && renderPapers()}
                 </div>
                 <br />
-                {<Pagination getPapers={getPapers} />}
+                <Pagination />
             </>
         )
     }
