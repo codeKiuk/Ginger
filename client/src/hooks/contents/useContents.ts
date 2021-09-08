@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { useBoardType } from './useBoardType'
 import { setIsCreateContentModal } from '@redux/modules/modal/createContentModal';
 import { RouteComponentProps } from 'react-router';
 import { postClubContent, getClubContents, postGroupContent, getGroupContents } from '@redux/modules/contents/contents';
@@ -9,13 +7,9 @@ import { ContentSubject } from '@redux/modules/commons/contentMenu';
 
 export const useContents = () => {
     const dispatch = useAppDispatch();
-    const { contentSubject, switchMenu } = useBoardType();
     const userID = useAppSelector(state => state.auth.userID);
     const auth = useAppSelector(state => state.auth.tokenMatch);
-
-    useEffect(() => {
-
-    }, [])
+    const perPage = useAppSelector(state => state.pagination.perPage);
 
     const onPostContent = (data: {
         checkClub: boolean,
@@ -30,10 +24,10 @@ export const useContents = () => {
 
         if (data.subject === ContentSubject.CLUB_CONTENT) {
             dispatch(postClubContent({ ...data, userID: userID }));
-            dispatch(getClubContents({ page: 1, perPage: 10 }));
+            dispatch(getClubContents({ page: 1, perPage: perPage }));
         } else {
             dispatch(postGroupContent({ ...data, userID: userID }));
-            dispatch(getGroupContents({ page: 1, perPage: 10 }));
+            dispatch(getGroupContents({ page: 1, perPage: perPage }));
         }
 
 

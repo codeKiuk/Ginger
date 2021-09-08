@@ -6,21 +6,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { RouteComponentProps } from 'react-router';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: "100%",
-        },
-        title: {
-            fontSize: 14,
-        },
-        pos: {
-            marginBottom: 12,
-        },
-    })
-)
 
 export const ContentPaper: React.FC<any> = (props) => {
     const classes = useStyles();
@@ -52,3 +37,17 @@ export const ContentPaper: React.FC<any> = (props) => {
         </Card>
     )
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            width: "100%",
+        },
+        title: {
+            fontSize: 14,
+        },
+        pos: {
+            marginBottom: 12,
+        },
+    })
+)

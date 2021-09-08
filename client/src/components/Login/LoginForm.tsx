@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import login, { postLogin } from '@redux/modules/auth/login'
+import { postLogin } from '@redux/modules/auth/login'
 import { RouteComponentProps } from 'react-router';
 import Copyright from '../commons/Copyright';
 import { getIsUserIDduplicated } from '@redux/modules/auth/register';

@@ -1,5 +1,4 @@
 import React from 'react'
-import { useBoardLoading } from '@hooks/loading/useBoardLoading'
 import { usePagination } from '@hooks/pagination/usePagination'
 
 import Button from '@material-ui/core/Button'
@@ -10,8 +9,6 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
 export const Pagination = () => {
     const classes = useStyles();
-
-    const loading = useBoardLoading();
     const { page, pageList, onBefore, onNext, onPageClick } = usePagination();
 
     const renderPageList = () => {

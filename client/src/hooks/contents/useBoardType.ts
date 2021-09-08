@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@redux/hooks'
-import { setContentMenuOpen, ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu'
+import { ContentSubject, setContentSubject } from '@redux/modules/commons/contentMenu'
 
 export const useBoardType = () => {
     const dispatch = useAppDispatch();

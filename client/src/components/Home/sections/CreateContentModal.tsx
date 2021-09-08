@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm, Controller } from "react-hook-form";
 import { useContents } from '@hooks/contents/useContents';
 
@@ -45,7 +45,7 @@ const CreateContentModal: React.FC<{}> = () => {
     }
 
     const onSubmit = handleSubmit(data => {
-        if (checkState.club === false && checkState.group == false) {
+        if (checkState.club === false && checkState.group === false) {
             return;
         }
 

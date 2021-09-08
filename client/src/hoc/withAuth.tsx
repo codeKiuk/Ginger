@@ -1,8 +1,7 @@
-import React, { Suspense, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
-import { useAppDispatch, useAppSelector } from '@redux/hooks'
+import { useAppDispatch } from '@redux/hooks'
 import { compareToken } from '@redux/modules/auth/auth'
-import { Loading } from '@components/commons/Loading'
 
 export const withAuth = (WrappedComponent: React.FC<RouteComponentProps>, auth: number): React.FC<RouteComponentProps> => {
 
@@ -33,9 +32,7 @@ export const withAuth = (WrappedComponent: React.FC<RouteComponentProps>, auth: 
 
         return (
             <div style={{ width: '100vw', height: '100vh' }}>
-                <Suspense fallback={<Loading />}>
-                    <WrappedComponent {...props} />
-                </Suspense>
+                <WrappedComponent {...props} />
             </div>
         )
     }
